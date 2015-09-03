@@ -1,4 +1,6 @@
 <?php
+
+
 require_once './system/IndexEngine.php';
 
 define( 'ROOT_PATH',
