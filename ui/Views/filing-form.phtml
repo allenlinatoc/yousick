@@ -20,9 +20,9 @@
     <form class="row form-horizontal" name="sickleave-form" method="post">
         <div class="form-group">
             <label for="datetimepicker" class="control-label col-md-3">Date</label>
-            <div class="form-group col-md-9">
-                <div class='input-group date' id='datetimepicker'>
-                    <input type='text' class="form-control"/>
+            <div class="col-md-9">
+                <div class="input-group date" id="datetimepicker">
+                    <input type="text" class="form-control"/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -61,6 +61,8 @@
 
 <script type="text/javascript">
     $(function () {
-        $('#datetimepicker').datetimepicker();
+        $('#datetimepicker').datetimepicker({
+            format: 'LL'
+        });
     });
 </script>

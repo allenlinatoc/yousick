@@ -4,7 +4,8 @@
     },
 
     "user": {
-        "file" : "filing-form"
+        "file" : "filing-form",
+        "template" : "slform"
     },
 
     "aboutus": {
