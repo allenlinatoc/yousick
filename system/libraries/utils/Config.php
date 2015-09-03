@@ -1,6 +1,6 @@
 <?php
 
-namespace utils;
+namespace Utilities;
 
 /**
  * Utility class for Config files
