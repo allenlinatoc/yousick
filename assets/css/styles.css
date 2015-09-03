@@ -1,17 +1,28 @@
 
 body 
 {
-    background-color: antiquewhite;
+    
 }
 
 div.header
 {
-    background-color: darkcyan;
-    color: #fff;
+    
 }
 
 div.footer
 {
     background-color: darkkhaki;
     color: #fff;
+}
+
+.textbox-large
+{
+    font-size: 40px;
+    height: 60px;
+}
+
+input[type="submit"].large
+{
+    font-size: 35px;
+    height: 60px;
 }

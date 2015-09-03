@@ -48,7 +48,7 @@ class Config {
      *
      * @return array The associative array containing the JSON contents
      */
-    public static function readJson($path) {
+    public static function ReadJSON($path) {
         RETURN json_decode(file_get_contents($path), true);
     }
 
