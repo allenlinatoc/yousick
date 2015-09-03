@@ -1,0 +1,17 @@
+
+body 
+{
+    background-color: antiquewhite;
+}
+
+div.header
+{
+    background-color: darkcyan;
+    color: #fff;
+}
+
+div.footer
+{
+    background-color: darkkhaki;
+    color: #fff;
+}

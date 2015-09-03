@@ -1,0 +1,13 @@
+{
+    "home": {
+        "file" : "myhomefile"
+    },
+    
+    "aboutus": {
+        "file" : "about-us"
+    },
+    
+    "404": {
+        "template" : "404"
+    }
+}
