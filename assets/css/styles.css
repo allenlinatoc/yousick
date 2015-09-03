@@ -1,12 +1,18 @@
 
-body 
+body
 {
-    
+
+}
+
+.col-centered
+{
+    float: none;
+    margin: 0 auto;
 }
 
 div.header
 {
-    
+
 }
 
 div.footer
@@ -25,4 +31,18 @@ input[type="submit"].large
 {
     font-size: 35px;
     height: 60px;
+}
+
+#sl-count-wrapper
+{
+    background-color: #cd172d;
+}
+
+#user-header
+{
+}
+
+.vertical-space
+{
+    height: 30px;
 }

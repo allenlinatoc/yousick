@@ -2,11 +2,15 @@
     "home": {
         "file" : "home"
     },
-    
+
+    "user": {
+        "file" : "filing-form"
+    },
+
     "aboutus": {
         "file" : "about-us"
     },
-    
+
     "404": {
         "template" : "404"
     }
