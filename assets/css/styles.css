@@ -25,4 +25,11 @@ input[type="submit"].large
 {
     font-size: 35px;
     height: 60px;
+	background-attachment:#fff;
+}
+
+div.col-lg-4 span.input-group span.input-group-btn div
+{
+	display:none;
+	
 }

@@ -10,8 +10,11 @@
                 <span class="input-group">
                     <input type="text" class="form-control textbox-large" name="username" maxlength="15" placeholder="Username">
                     <span class="input-group-btn">
-                        <input type="submit" class="btn btn-primary large" value="Start">
-                    </span>
+                        <input type="submit" id="START" class="btn btn-danger large" value="Start">
+						<div id="spinner" class="whirly-loader">
+							Loading…
+						</div>
+					</span>
                 </span>
             </form>
         </div>
@@ -43,4 +46,9 @@
 //           }
 //        });
 //    });
+$(document).ready(function(){
+    $("#START").click(function(){
+        $("#spinner").show();
+    });
+});
 </script>
