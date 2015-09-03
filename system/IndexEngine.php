@@ -50,7 +50,7 @@ class IndexEngine {
 
     public function getBackboneFile($page=self::DEFAULT_PAGE)
     {
-        $pagesJson = utils\Config::ReadJSON(ROOT_PATH . 'config/pages.json');
+        $pagesJson = Utilities\Config::ReadJSON(ROOT_PATH . 'config/pages.json');
         $backbonePage = isset($pagesJson[$page]) ? $pagesJson[$page] : array($page);
         if ( !isset($backbonePage['file']) )
         {
@@ -63,8 +63,8 @@ class IndexEngine {
 
     public function getTemplateFile($page=self::DEFAULT_PAGE)
     {
-        $pagesJson = utils\Config::ReadJSON(ROOT_PATH . 'config/pages.json');
-        $defaultTemplate = utils\Config::get('main_template', ROOT_PATH.'config/application.ini');
+        $pagesJson = Utilities\Config::ReadJSON(ROOT_PATH . 'config/pages.json');
+        $defaultTemplate = Utilities\Config::get('main_template', ROOT_PATH.'config/application.ini');
         $template = $defaultTemplate;
         $page = !isset($pagesJson[$page]) ? '404' : $page;
         if ( isset($pagesJson[$page]['template']) )
@@ -79,7 +79,7 @@ class IndexEngine {
 
     public function getViewFile($page=self::DEFAULT_PAGE)
     {
-        $pagesJson = utils\Config::ReadJSON(ROOT_PATH . 'config/pages.json');
+        $pagesJson = Utilities\Config::ReadJSON(ROOT_PATH . 'config/pages.json');
         $backbonePage = isset($pagesJson[$page]) ? $pagesJson[$page] : array($page);
         if ( !isset($backbonePage['file']) )
         {
