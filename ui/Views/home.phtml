@@ -1,21 +1,21 @@
-<div class="jumbotron" style="background-color: white; text-align: center;">
+<div class="jumbotron" style="background-color: white; text-align: center; margin: auto 0;">
     <h1>YouSick</h1>
     <h4>A simple and lightweight sick-leave notification system</h4>
 </div>
-<div class="row">
+<div class="row-fluid">
     <div align="center">
         <h2>Enter your username to start</h2>
         <br>
         <div class="col-lg-4" style="float:none">
             <form name="UsernameForm" method="post">
                 <span class="input-group">
-                    <input type="text" class="form-control textbox-large" name="username" maxlength="15" placeholder="Username">
+                    <input type="text" class="form-control textbox-large" name="username" maxlength="15">
                     <span class="input-group-btn">
                         <input type="submit" id="START" class="btn btn-danger large" value="Start">
-						<div id="spinner" class="whirly-loader">
-							Loading…
-						</div>
-					</span>
+                        <div id="spinner" class="whirly-loader">
+                            Loading…
+                        </div>
+                    </span>
                 </span>
             </form>
         </div>
@@ -47,9 +47,14 @@
 //           }
 //        });
 //    });
-$(document).ready(function(){
-    $("#START").click(function(){
-        $("#spinner").show();
+    $(document).ready(function () {
+
+        // Focus on form
+        $('input[name=username]').focus();
+
+
+        $("#START").click(function () {
+            $("#spinner").show();
+        });
     });
-});
 </script>
