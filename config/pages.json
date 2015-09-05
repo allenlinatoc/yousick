@@ -2,6 +2,11 @@
     "home": {
         "file" : "home"
     },
+	
+	"home2": {
+        "file" : "home2",
+		"template" : "service"
+    },
     
     "aboutus": {
         "file" : "about-us"
