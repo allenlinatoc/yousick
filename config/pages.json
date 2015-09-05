@@ -4,8 +4,13 @@
     },
 
     "user": {
-        "file" : "filing-form",
-        "template" : "slform"
+        "file" : "user",
+        "template" : "form"
+    },
+
+    "admin-add": {
+        "file" : "admin_add",
+        "template" : "form"
     },
 
     "aboutus": {

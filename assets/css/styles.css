@@ -43,6 +43,11 @@ input[type="submit"].large
 {
 }
 
+.span-right
+{
+    float: right;
+}
+
 .vertical-space
 {
     height: 30px;
