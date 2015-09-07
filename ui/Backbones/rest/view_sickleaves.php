@@ -15,33 +15,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-namespace Models;
-
-/**
- * Description of UserList
  *
- * @author alinatoc
  */
-class UserList extends \ModelCollection
-{
 
-    public function __construct($fetch = true)
-    {
-        parent::__construct('user', $fetch);
-    }
+$sickleaveList = new \Models\SickleaveList();
 
-    public function ContainsUsername($username)
-    {
-        foreach ($this as $user)
-        {
-            if (strcasecmp($user->getUsername(), strtolower(trim($username))) == 0)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-}
+die(new ModelResponse(true, null, $sickleaveList));

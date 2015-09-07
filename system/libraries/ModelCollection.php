@@ -66,6 +66,24 @@ abstract class ModelCollection
         reset($this->list);
     }
 
+    public function Create()
+    {
+
+        foreach ($this as $bean)
+        {
+            $reflectionClass = new ReflectionClass($bean);
+
+            if (strpos(strtolower($reflectionClass->getName()), strtolower($this->GetModelName())) !== false && !$bean->Exists())
+            {
+                $bean->SaveAll();
+                if ($bean->HasState() && !$bean->GetState()->IsSuccess())
+                    return false;
+            }
+        }
+
+        return true;
+    }
+
     /**
      * @property collection
      * @complex

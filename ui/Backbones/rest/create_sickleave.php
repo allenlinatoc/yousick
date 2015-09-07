@@ -15,33 +15,41 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-namespace Models;
-
-/**
- * Description of UserList
  *
- * @author alinatoc
+ * [REST_META]
+ *
+ * author_id (int)
+ * for_id (int)
+ * date (mysql date)
+ * span (decimal)
+ * reason (string)
+ *
  */
-class UserList extends \ModelCollection
+
+$expectations = [
+    'author_id',
+    'for_id',
+    'date',
+    'span',
+    'reason'
+];
+
+if (!\Utilities\Requests::HasRequest($expectations))
 {
-
-    public function __construct($fetch = true)
-    {
-        parent::__construct('user', $fetch);
-    }
-
-    public function ContainsUsername($username)
-    {
-        foreach ($this as $user)
-        {
-            if (strcasecmp($user->getUsername(), strtolower(trim($username))) == 0)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
+    die(ModelResponse::InvalidRequest());
 }
+
+$raw_data = [];
+foreach ($_REQUEST as $key => $value)
+{
+    if (in_array($key, $expectations))
+        $raw_data[$key] = $value;
+}
+
+$newSickleave = new \Models\Sickleave();
+$newSickleave->Absorb($raw_data);
+
+if (!$newSickleave->SaveAll())
+    die(ModelResponse::DataSaveFailed());
+
+die(new ModelResponse(true, "Sick leave entry has been successfully added!", $newSickleave));
