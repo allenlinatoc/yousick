@@ -17,34 +17,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace Utilities;
 
 /**
- * Check if a username has account
+ * Description of Email
  *
- * @param string $username
- * @return boolean
+ * @author alinatoc
  */
-function has_account($username)
+class Email
 {
-    $user_file_contents = file_get_contents(CONFIG_PATH . 'users');
-    $exploded = explode("\n", $user_file_contents);
-    $users = array_map("rtrim", $exploded);
+
+    
 
 
-    $keys = array_keys($users);
-
-    foreach ($keys as $key)
+    static public function NotifyAdmins(\Models\Sickleave $sickleave)
     {
-        $users[$key] = rtrim($users[$key], '*');
-        $uname = $users[$key];
 
-        // Bypass empty
-        if (strlen($uname) == 0)
-            continue;
-
-        if (strlen(trim($users[$key])) == 0)
-            unset($users[$key]);
     }
 
-    return in_array($username, $users);
 }
