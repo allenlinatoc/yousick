@@ -17,47 +17,44 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Models;
+namespace Utilities;
 
 /**
- * Description of UserList
+ * Description of Requests
  *
  * @author alinatoc
  */
-class UserList extends \ModelCollection
+class Requests
 {
 
-    public function __construct($fetch = true)
+    static public function HasPost(array $names)
     {
-        parent::__construct('user', $fetch);
-    }
-
-    public function Create()
-    {
-
-        foreach ($this as $user)
+        foreach ($names as $name)
         {
-            if ($user instanceof User && !$user->Exists())
-            {
-                $user->SaveAll();
-                if ($user->HasState() && !$user->GetState()->IsSuccess())
-                    return false;
-            }
+            if (!isset($_POST[$name]))
+                return false;
         }
-
         return true;
     }
 
-    public function ContainsUsername($username)
+    static public function HasGet(array $names)
     {
-        foreach ($this as $user)
+        foreach ($names as $name)
         {
-            if (strcasecmp($user->getUsername(), strtolower(trim($username))) == 0)
-            {
-                return true;
-            }
+            if (!isset($_GET[$name]))
+                return false;
         }
-        return false;
+        return true;
+    }
+
+    static public function HasRequest(array $names)
+    {
+        foreach ($names as $name)
+        {
+            if (!isset($_REQUEST[$name]))
+                return false;
+        }
+        return true;
     }
 
 }

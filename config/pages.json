@@ -3,6 +3,10 @@
         "file" : "rest/check_username",
         "template" : "blank"
     },
+    "rest/check_password": {
+        "file" : "rest/check_password",
+        "template" : "blank"
+    },
     "rest/view_employees": {
         "file" : "rest/view_employees",
         "template" : "blank"

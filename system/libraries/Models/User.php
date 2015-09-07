@@ -74,4 +74,21 @@ class User extends \Model
         parent::SaveAll([ 'created_on' ]);
     }
 
+
+    static public function FindUsername($username)
+    {
+        $db = \DB::Instance();
+
+        $rows = $db->select('user', [ 'id' ], [
+            'username' => strtolower($username)
+        ]);
+
+        if (sizeof($rows) == 0)
+            return false;
+
+        $rows = $rows[0];
+
+        return User::Find($rows['id'], 'user');
+    }
+
 }
