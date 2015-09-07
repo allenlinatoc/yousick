@@ -5,7 +5,7 @@
 
     "user": {
         "file" : "user",
-        "template" : "form"
+        "template" : "user_form"
     },
 
     "admin": {
@@ -15,7 +15,7 @@
 
     "admin-add": {
         "file" : "admin_add",
-        "template" : "form"
+        "template" : "admin_form"
     },
 
     "aboutus": {

@@ -7,26 +7,24 @@
         <div id="name-wrapper">
             <h2>File Sick Leave</h2>
         </div>
-        <!--
-        <div id="sl-count-wrapper" class="col-md-3">
-            <div class="row">
-                <label>SL</label>
-                <a href="">15/15</a>
-            </div>
-        </div>
-        -->
     </div>
     <div class="vertical-space"></div>
     <form class="row form-horizontal" name="sickleave-form" method="post">
         <div class="form-group">
             <label for="employee-name-field" class="control-label col-md-3">Who</label>
-            <div class="col-md-9">
-                <input type="text" id="employee-name-field" class="form-control" name="employee-name"/>
+            <div class="col-md-9 control-group">
+                <select id="employee-name-field" class="form-control" placeholder="Select employee">
+                    <option value="">Select a person...</option>
+					<option value="4">Thomas Edison</option>
+					<option value="1">Nikola</option>
+					<option value="3">Nikola Tesla</option>
+					<option value="5">Arnold Schwarzenegger</option>
+                </select>
             </div>
             <div class="col-md-3"></div>
             <div class="col-md-9">
                 <label><strong>0/15</strong> Sick Leave Filed</label>
-                <span class="span-right">
+                <span class="pull-right">
                     <a href="">See history</a>
                 </span>
             </div>
@@ -77,6 +75,14 @@
         $('#datetimepicker').datetimepicker({
             format: 'LL',
             defaultDate: new Date()
+        });
+
+        $('#employee-name-field').selectize({
+            create: true,
+            sortField: {
+                field: 'text',
+                direction: 'asc'
+            }
         });
     });
 </script>
