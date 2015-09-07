@@ -22,6 +22,8 @@ class IndexEngine {
         mb_internal_encoding('UTF-8');
         // autoload
         spl_autoload_register(array($this, 'autoload'));
+        // initialize constants
+        $this->initializeConstants();
     }
 
     public function autoload($classname)
@@ -84,8 +86,22 @@ class IndexEngine {
         if ( !isset($backbonePage['file']) )
         {
             $backbonePage['file'] = '404';
+            return false;
         }
         RETURN ROOT_PATH.'ui/Views/'.$backbonePage['file'].'.phtml';
+    }
+
+
+
+    public function initializeConstants()
+    {
+        define( 'BASE_URL',
+                Utilities\System::GetBaseURL()
+        );
+
+        define( 'CONFIG_PATH',
+                ROOT_PATH . 'config/'
+        );
     }
 
 
@@ -96,8 +112,12 @@ class IndexEngine {
         REQUIRE_ONCE $this->getBackboneFile($page);
 
         ob_start();
-        require_once $this->getViewFile($page);
+        $view = $this->getViewFile($page);
+        if ($view !== false)
+            REQUIRE_ONCE $view;
+
         $_VIEW = ob_get_clean();
+
         REQUIRE_ONCE $this->getTemplateFile($page);
     }
 

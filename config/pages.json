@@ -1,21 +1,32 @@
 {
+    "rest-check_username": {
+        "file" : "rest/check_username",
+        "template" : "blank"
+    },
+    
     "home": {
         "file" : "home"
     },
-	
-	"home2": {
-        "file" : "home2",
-		"template" : "service"
-    },
-	
-	"upload": {
-        "file" : "upload"
-    },
     
+    "user": {
+        "file" : "user",
+        "template" : "form"
+    },
+
+    "admin": {
+        "file" : "admin",
+        "template" : "admin"
+    },
+
+    "admin-add": {
+        "file" : "admin_add",
+        "template" : "form"
+    },
+
     "aboutus": {
         "file" : "about-us"
     },
-    
+
     "404": {
         "template" : "404"
     }
