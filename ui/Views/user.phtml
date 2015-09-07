@@ -5,7 +5,7 @@
 <div class="col-md-4 col-sm-6 col-xs-9 col-centered">
     <div id="user-header" class="row">
         <div id="name-wrapper">
-            <h2>Name</h2>
+            <h2 id="name">Name</h2>
             <label><strong>0/15</strong> Sick Leave Filed</label>
             <span class="pull-right">
                 <a href="">See history</a>
@@ -13,12 +13,12 @@
         </div>
     </div>
     <div class="vertical-space"></div>
-    <form class="row form-horizontal" name="sickleave-form" method="post">
+    <form id="fileSickLeave" class="row form-horizontal" name="sickleave-form" method="post">
         <div class="form-group">
             <label for="datetimepicker" class="control-label col-md-3">Date</label>
             <div class="col-md-9">
                 <div class="input-group date" id="datetimepicker">
-                    <input type="text" class="form-control"/>
+                    <input name="date" type="text" class="form-control"/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -28,13 +28,13 @@
             <div class="col-md-9">
                 <div class="col-md-6">
                     <label class="radio-inline">
-                        <input type="radio" name="optionsRadios" id="whole-day-radion-btn" value="1" checked>
+                        <input type="radio" name="span" id="spanWhole" value="1" checked>
                         Whole day
                     </label>
                 </div>
                 <div class="col-md-6">
                     <label class="radio-inline">
-                        <input type="radio" name="optionsRadios" id="half-day-radion-btn" value="0.5">
+                        <input type="radio" name="span" id="spanHalf" value="0.5">
                         Half day
                     </label>
                 </div>
@@ -43,7 +43,7 @@
         <div class="form-group">
             <label for="reason-field" class="control-label col-md-3">Reason</label>
             <div class="col-md-9">
-                <input type="text" id="reason-field" class="form-control" name="reason"/>
+                <input type="text" id="reason" class="form-control" name="reason"/>
             </div>
         </div>
         <div class="form-group">
@@ -56,10 +56,59 @@
 </div>
 
 <script type="text/javascript">
+	var author_id;
     $(function () {
         $('#datetimepicker').datetimepicker({
             format: 'LL',
             defaultDate: new Date()
         });
     });
+	$(document).ready(function(){
+		$.ajax({
+				dataType: 'json',
+				url: '/rest/view_employees',
+				success: function(employees) {
+					if (employees.success)
+					{
+						for(var i = 0; i < employees.data.collection.length; i++)
+						{
+							var row = employees.data.collection[i];
+							if(row.username=="rdognidon")
+							{
+								author_id = row.ID;
+								$('#name').text(row.name);
+							}
+							//$('#name').append(row.name + "<br>");
+						}
+					}
+				}
+			});
+		$("#fileSickLeave").submit(function (e) {
+			e.preventDefault();
+
+			var jsDate = new Date($('#date').val());
+			var date = moment(jsDate).format('YYYY-MM-DD');
+			$('#date').val(date);
+
+			var data = $('#fileSickLeave').serialize()+"&author_id="+author_id+"&for_id="+author_id;
+			console.log(data);
+
+			$.ajax({
+				method: 'POST',
+				url: '/rest/create_sickleave',
+				data: data,
+				success: function(retData) {
+					if(retData.success && retData.data.state.success)
+					{
+						alert("Success");
+					}
+					else {
+						alert("Failed: " + retData.message);
+						if (!retData.data.state.success)
+							alert(retData.data.state.message);
+					}
+				}
+			});
+		});
+	});
 </script>
