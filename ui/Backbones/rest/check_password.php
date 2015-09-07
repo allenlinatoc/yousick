@@ -64,6 +64,11 @@ if ($bind == true)
     // Get user data
     $user = \Models\User::FindUsername($username);
 
+    if ($user instanceof \Models\User && $user->getUsername() != null)
+    {
+        Utilities\Session::LogIn($user->getUsername());
+    }
+
     die(new ModelResponse(true, 'Authentication success', $user));
 }
 else

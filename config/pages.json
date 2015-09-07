@@ -14,6 +14,11 @@
         "template" : "blank"
     },
     
+    "rest/get_session": {
+        "file" : "rest/get_session",
+        "template" : "blank"
+    },
+    
     "rest/is_admin": {
         "file" : "rest/is_admin",
         "template" : "blank"

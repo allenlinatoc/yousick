@@ -32,4 +32,32 @@ class SickleaveList extends \ModelCollection
         parent::__construct('sickleave', $fetch);
     }
 
+    static public function CreateFromUsername($username)
+    {
+        $pdo = \DB::Instance()->pdo;
+        if ($pdo instanceof \PDO)
+        {
+            $stmt = $pdo->prepare("SELECT sickleave.* FROM sickleave JOIN user ON sickleave.for_id = user.id AND user.username = :username");
+
+            $stmt->execute([
+                ':username' => $username
+            ]);
+
+            $rows = $stmt->fetchAll();
+
+            $result = new SickleaveList(false);
+
+            foreach ($rows as $row)
+            {
+                $sickleave = new Sickleave();
+                $sickleave->Absorb($row);
+                $result->add($sickleave);
+            }
+
+            return $sickleave;
+        }
+
+        return false;
+    }
+
 }

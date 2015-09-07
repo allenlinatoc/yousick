@@ -22,6 +22,8 @@
  *
  */
 
+header('Content-type: application/json');
+
 require_once ROOT_PATH . 'includes/load_admin_usernames.php';
 
 $expectations = [ 'username' ];

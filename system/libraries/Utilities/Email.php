@@ -19,6 +19,8 @@
 
 namespace Utilities;
 
+require_once ROOT_PATH . '/includes/phpmailer/PHPMailerAutoload.php';
+
 /**
  * Description of Email
  *
@@ -27,7 +29,10 @@ namespace Utilities;
 class Email
 {
 
-    
+    static public function Instance()
+    {
+        $phpMailer = new \PHPMailer();
+    }
 
 
     static public function NotifyAdmins(\Models\Sickleave $sickleave)

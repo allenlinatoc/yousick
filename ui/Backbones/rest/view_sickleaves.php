@@ -16,10 +16,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
+ * [REST_META]
+ *
+ * [optional] username (string)
+ *
  */
 
 header('Content-type: application/json');
 
-$sickleaveList = new \Models\SickleaveList();
+if (isset($_REQUEST['username']) && strlen($_REQUEST['username']) > 0)
+{
+    $sickleaveList = \Models\SickleaveList::CreateFromUsername($_REQUEST['username']);
+}
+else
+{
+    $sickleaveList = new \Models\SickleaveList();
+}
 
 die(new ModelResponse(true, null, $sickleaveList));
