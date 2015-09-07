@@ -34,7 +34,7 @@
 		<input type="submit" value="Submit"-->
         
 	<span class="input-group">
-		<h2>Enter Password</h2>
+		<h2 id="passwordHeader">Enter Password</h2>
 		<div id="spinnerPassword" class="whirly-loader">
 			Loading…
 		</div>
@@ -120,7 +120,8 @@
 					}
 					else{
 						$("#password").val('');
-						$("#remodal2").trigger("click");
+						$("#passwordHeader").html('Enter Password (<font color="red"><i>Wrong password</i></font>)');
+						//$("#remodal2").trigger("click");
 					}
 				},	
 			});
