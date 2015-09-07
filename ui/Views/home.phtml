@@ -116,7 +116,15 @@
 					if(response.success){
 						$("#password").val('');
 						$("#close").trigger("click");
-						window.location.replace("http://localhost:8888/admin");
+						if(response.data.is_admin)
+						{
+							window.location.replace("http://localhost:8888/admin");
+						}
+						else
+						{
+							window.location.replace("http://localhost:8888/user");
+						}
+						//window.location.replace("http://localhost:8888/admin");
 					}
 					else{
 						$("#password").val('');
