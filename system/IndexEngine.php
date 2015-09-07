@@ -41,7 +41,10 @@ class IndexEngine {
         if (strlen($uri) > 0)
         {
             // Get Request
-            $request = strpos('/', $uri) !== false ? substr($uri, 0, strpos('/', $uri)) : $uri;
+            $matches = array();
+            preg_match('/^[A-Za-z0-9\%-_][^&]+/', $uri, $matches);
+
+            $request = $matches[0];
             $page = $request;
         }
 
