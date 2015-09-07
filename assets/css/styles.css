@@ -35,3 +35,10 @@ div.col-lg-4 span.input-group div
     right: -50px;
     top: 20px;
 }
+div.col-lg-4 div#spinnerUpload
+{
+	display:none;
+    position: absolute;
+    right: -50px;
+    top: 20px;
+}

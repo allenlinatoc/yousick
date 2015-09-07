@@ -7,6 +7,10 @@
         "file" : "home2",
 		"template" : "service"
     },
+	
+	"upload": {
+        "file" : "upload"
+    },
     
     "aboutus": {
         "file" : "about-us"
