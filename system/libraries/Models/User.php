@@ -82,7 +82,7 @@ class User extends \Model
         parent::SaveAll([ 'is_admin' ]);
     }
 
-    public function SaveAll()
+    public function SaveAll(array $excludeFields = null)
     {
         return parent::SaveAll([ 'is_admin' ]);
     }

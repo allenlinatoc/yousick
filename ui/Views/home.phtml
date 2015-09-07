@@ -35,10 +35,10 @@
         <h2>Enter Password</h2>
         <br>
 	</form>
-		<form name="AuthenticateForm" method="post">			
+		<form id="login" name="AuthenticateForm" method="post">			
 		<input name="username" type="hidden">
 			<span class="input-group">
-				<input type="password" class="form-control textbox-large" name="password">
+				<input id="password" type="password" class="form-control textbox-large" name="password">
 				<span class="input-group-btn">
 					<input type="submit" id="enterPass" class="btn btn-danger large" value="Submit">
 				</span>
@@ -46,6 +46,15 @@
 		</form>
   <!--a data-remodal-action="cancel" class="remodal-cancel" href="#">Cancel</a>
   <a data-remodal-action="confirm" class="remodal-confirm" href="#">OK</a-->
+</div>
+<div class="remodal-bg">
+  <div id="qunit"></div>
+  <a href="#" id="remodal2" data-remodal-target="modal2" style="display:none;">Call</a>
+</div>
+
+<div class="remodal" data-remodal-id="modal2">
+  <a data-remodal-action="close" class="remodal-close"></a>
+        <h2>WRONG USERNAME INPUT!</h2>
 </div>
 </script>
 
@@ -57,6 +66,7 @@
 
 	$(document).ready(function(){
 		var username;
+		var password;
 		
 		$("#startForm").submit(function (e) {
 			
@@ -80,8 +90,29 @@
 					else{
 						$("#spinner").hide();
 						$("#username").val('');
-						alert("error");
+						$("#remodal2").trigger("click");
 						console.log(response.data);
+					}
+				},	
+			});
+		});$("#login").submit(function (e) {
+			
+			username = $("#username").val();
+			e.preventDefault();
+			
+			$.ajax({
+				data: $('#login').serialize(),
+				method: "post",
+				url: "<?= BASE_URL ?>rest/check_password",
+				contentType: 'json',
+				success: function (response) {
+					console.log(response);
+					if(response.success){
+						alert("good");
+						console.log(response.data);
+					}
+					else{
+						alert("bad");
 					}
 				},	
 			});
