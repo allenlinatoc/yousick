@@ -15,10 +15,6 @@
             <div class="col-md-9 control-group">
                 <select id="employee-name-field" class="form-control" placeholder="Select employee">
                     <option value="">Select a person...</option>
-					<option value="4">Thomas Edison</option>
-					<option value="1">Nikola</option>
-					<option value="3">Nikola Tesla</option>
-					<option value="5">Arnold Schwarzenegger</option>
                 </select>
             </div>
             <div class="col-md-3"></div>
@@ -77,11 +73,29 @@
             defaultDate: new Date()
         });
 
-        $('#employee-name-field').selectize({
+        var selectize = $('#employee-name-field').selectize({
             create: true,
             sortField: {
                 field: 'text',
                 direction: 'asc'
+            }
+        });
+
+        var selectizeControl = selectize[0].selectize;
+
+        $.ajax({
+            dataType: 'json',
+            url: '/rest/view_employees',
+            success: function(employees) {
+                if (employees.success)
+                {
+                    $.each(employees.data.collection, function(index, employee) {
+                        selectizeControl.addOption({
+                            value: employee.ID,
+                            text: employee.name
+                        });
+                    });
+                }
             }
         });
     });
