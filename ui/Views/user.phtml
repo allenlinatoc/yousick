@@ -18,7 +18,7 @@
             <label for="datetimepicker" class="control-label col-md-3">Date</label>
             <div class="col-md-9">
                 <div class="input-group date" id="datetimepicker">
-                    <input name="date" type="text" class="form-control"/>
+                    <input name="date" id="date" type="text" class="form-control"/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -64,6 +64,18 @@
         });
     });
 	$(document).ready(function(){
+        $.ajax({
+            dataType: 'json',
+            url: '/rest/get_session',
+            success: function(session) {
+                if (session.success)
+                {
+                    author_id = session.data.user.ID;
+                    var htmlText = session.data.user.username + "  <span class='caret'></span>"
+                    //$('#admin-user-btn').html(htmlText)
+                }
+            }
+        });
 		$.ajax({
 				dataType: 'json',
 				url: '/rest/view_employees',
@@ -73,9 +85,8 @@
 						for(var i = 0; i < employees.data.collection.length; i++)
 						{
 							var row = employees.data.collection[i];
-							if(row.username=="rdognidon")
+							if(row.ID==author_id)
 							{
-								author_id = row.ID;
 								$('#name').text(row.name);
 							}
 							//$('#name').append(row.name + "<br>");
@@ -83,6 +94,7 @@
 					}
 				}
 			});
+
 		$("#fileSickLeave").submit(function (e) {
 			e.preventDefault();
 
