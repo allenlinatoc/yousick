@@ -9,24 +9,18 @@
 
 //die();
 
-
-$user = new Models\User();
-$user->Absorb([
-    'username' => 'alinatoc',
-    'name' => 'Allen Linatoc',
-    'department' => 'Technical Trainee',
-    'email' => 'alinatoc@openit.com'
-]);
-
-echo (string)$user;
-
 //$users = new Models\UserList();
 //echo $users;
 
-die();
 //echo new ModelResponse(true, '', $user);
 
-
+//$user = new Models\User();
+//$user->Absorb([
+//    'username' => 'alinatoc',
+//    'name' => 'Allen Linatoc',
+//    'department' => 'Technical trainee',
+//    'email' => 'alinatoc@openit.com'
+//]);
 //$user->SaveAll();
 //echo $user;
 
@@ -40,5 +34,6 @@ die();
 //$p = new Phar(ROOT_PATH . 'core.phar');
 //$p->extractTo(ROOT_PATH . 'core');
 
+die();
 
 ?>

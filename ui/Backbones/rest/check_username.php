@@ -17,41 +17,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Models;
+header('Content-type: application/json');
 
-/**
- * Description of Sickleave
- *
- * @author alinatoc
- */
-class Sickleave extends \Model
+require_once ROOT_PATH . 'includes/load_ad_usernames.php';
+
+if (!isset($_POST['username']))
 {
-
-    public
-            $author,
-            $for,
-            $date,
-            $span,
-            $reason,
-            $remarks,
-            $notifstatus,
-            $read_by,
-            $read_on
-    ;
-
-    public function __construct()
-    {
-        parent::__construct('sickleave');
-        $this->SetPropertyMap(new \ComplexPropertyMap([
-            'author' => 'User',
-            'for' => 'User',
-            'read_by' => 'User'
-        ]));
-    }
-
-    public function Save()
-    {
-        parent::SaveAll();
-    }
-
+    die(ModelResponse::InvalidRequest());
 }
+
+$username = trim($_POST['username']);
+
+$matches = array();
+preg_match('/[A-Za-z0-9_\.]+/', $username, $matches);
+
+if (sizeof($matches) > 0)
+    $username = strtolower($username[0]);
+
+
+$exists = (in_array($username, $users));
+
+echo new ModelResponse($exists, $exists ? 'Username exists' : 'User is not registered');

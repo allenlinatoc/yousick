@@ -32,4 +32,24 @@ class ComplexPropertyMap
         $this->mapData = $mapData;
     }
 
+    public function IsMapped($propertyName)
+    {
+        return isset($this->mapData[$propertyName]);
+    }
+
+    /**
+     * Create new instance from a mapped property
+     *
+     * @param The mapped property $propertyName
+     * @param mixed $parameter
+     *
+     * @return mixed
+     */
+    public function Construct($propertyName, $parameter)
+    {
+        $modelName = "\\Models\\" . ltrim(ltrim($this->mapData[$propertyName], "\\"), "Models\\");
+
+        return new $modelName($parameter);
+    }
+
 }

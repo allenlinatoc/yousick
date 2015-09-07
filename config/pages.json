@@ -1,4 +1,9 @@
 {
+    "rest-check_username": {
+        "file" : "rest/check_username",
+        "template" : "blank"
+    },
+    
     "home": {
         "file" : "home"
     },

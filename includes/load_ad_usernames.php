@@ -17,41 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Models;
+$user_file_contents = file_get_contents(CONFIG_PATH . 'users');
+$users = explode(PHP_EOL, $user_file_contents);
 
-/**
- * Description of Sickleave
- *
- * @author alinatoc
- */
-class Sickleave extends \Model
+$keys = array_keys($users);
+
+foreach ($keys as $key)
 {
-
-    public
-            $author,
-            $for,
-            $date,
-            $span,
-            $reason,
-            $remarks,
-            $notifstatus,
-            $read_by,
-            $read_on
-    ;
-
-    public function __construct()
-    {
-        parent::__construct('sickleave');
-        $this->SetPropertyMap(new \ComplexPropertyMap([
-            'author' => 'User',
-            'for' => 'User',
-            'read_by' => 'User'
-        ]));
-    }
-
-    public function Save()
-    {
-        parent::SaveAll();
-    }
-
+    if (strlen(trim($users[$key])) == 0)
+        unset($users[$key]);
 }

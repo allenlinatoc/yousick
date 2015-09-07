@@ -7,6 +7,7 @@ class Model
 
     protected $state = null;
     protected $authorizedSession;
+    protected $propertyMap = null;
     public $id = null;
 
 
@@ -111,6 +112,12 @@ class Model
     }
 
 
+    public function GetAuthorizedSession()
+    {
+        return $this->authorizedSession;
+    }
+
+
     /**
      * Get the name of this model
      *
@@ -135,11 +142,17 @@ class Model
     {
         $output = json_decode($this->Serialize(), true);
 
+        if (!is_array($excludeFields))
+        {
+            $excludeFields = [ 'has_state' ];
+        }
+
         if (is_array($excludeFields) && sizeof($excludeFields) > 0)
         {
             $keys = array_keys($output);
             foreach ($keys as $key)
             {
+
                 foreach ($excludeFields as $field)
                 {
                     if (strcasecmp($key, $field) == 0)
@@ -149,6 +162,76 @@ class Model
         }
 
         return $output;
+    }
+
+    public function GetDBReadyValues(array $excludeFields = null)
+    {
+        $propertyValues = $this->GetPropertyValues($excludeFields);
+        $propMap = $this->GetPropertyMap();
+
+        foreach ($propertyValues as $prop => $value)
+        {
+            if ($propMap !== null && $propMap->IsMapped($prop))
+            {
+                $reflection = new ReflectionObject($value);
+                if ($reflection->isSubclassOf('\Model'))
+                {
+                    $propertyValues[$prop] = $value->GetRecordID();
+                    continue;
+                }
+            }
+
+            $propertyValues[$prop] = $value;
+        }
+
+        return $propertyValues;
+    }
+
+    /**
+     * Get the ComplexPropertyMap of this model
+     *
+     * @return \ComplexPropertyMap
+     */
+    public function GetPropertyMap()
+    {
+        return $this->propertyMap;
+    }
+
+    /**
+     * @property state
+     * @complex
+     */
+    public function GetState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * Check if this has property map
+     *
+     * @return boolean
+     */
+    public function HasPropertyMap()
+    {
+        return $this->propertyMap != null;
+    }
+
+
+    /**
+     * Check if this has state/ModelResponse inside
+     *
+     * @return boolean
+     * @property has_state
+     */
+    public function HasState()
+    {
+        // JSONization doesn't apply to ModelResponse objects
+
+        $reflection = new ReflectionObject($this);
+        if (strtolower(trim($reflection->getName(), '\\')) == 'modelresponse')
+            return null;
+
+        return $this->GetState() !== null;
     }
 
 
@@ -164,7 +247,7 @@ class Model
         $db = \DB::Instance();
         $db->pdo->beginTransaction();
 
-        $properties = $this->GetPropertyValues($excludeFields);
+        $properties = $this->GetDBReadyValues($excludeFields);
 
         // Check if this exists
         if ($this->Exists())
@@ -175,13 +258,17 @@ class Model
         }
         else
         {
+
             // Create data
-            $db->insert($this->GetModelName(), [
+            $insertResult = $db->insert($this->GetModelName(), [
                 $properties
             ]);
 
             // Get the ID
             $this->id = $db->pdo->lastInsertId();
+
+            if ($this->id == 0)
+                $this->SetState(ModelResponse::DataSaveFailed());
 
         }
 
@@ -189,7 +276,7 @@ class Model
         $errorCode = intval($errorInfo[0]);
         if ($errorCode != 0)
         {
-            return false;
+            $this->SetState(new ModelResponse(false, sprintf('[%s] %s', $errorCode, $errorInfo[1])));
         }
 
         // Fetch-back
@@ -210,6 +297,16 @@ class Model
     public function Serialize()
     {
         return json_encode($this->toArray());
+    }
+
+    public function SetPropertyMap(ComplexPropertyMap $propertyMap)
+    {
+        $this->propertyMap = $propertyMap;
+    }
+
+    public function SetState(ModelResponse $state)
+    {
+        $this->state = $state;
     }
 
     public function RequestBind(array $vars, $tag = '')
@@ -261,16 +358,6 @@ class Model
         }
     }
 
-    public function GetState()
-    {
-        return $this->state;
-    }
-
-    public function GetAuthorizedSession()
-    {
-        return $this->authorizedSession;
-    }
-
 
 
 
@@ -279,11 +366,11 @@ class Model
      * Create an instance of this Model from an ID (optionally, also table name). Returns NULL if none found
      *
      * @param int $id
-     * @param string $tableName (Optional) The name of table to derive from
+     * @param string $tableName The name of table to derive from
      *
      * @return mixed
      */
-    static public function Find($id, $tableName = null)
+    static public function Find($id, $tableName)
     {
         $db = \DB::Instance();
 
@@ -291,23 +378,32 @@ class Model
             'id' => $id
         ]);
 
-        if (sizeof($rows) == 0)
-            return null;
-        else
-            $rows = $rows[0];
-
-        if ($tableName == null)
-            $modelClass = sprintf('\Models\%s', $this->GetModelName());
-        else
-            $modelClass = sprintf('\Models\%s', ucfirst(strtolower($tableName)));
+        $modelClass = sprintf('\Models\%s', ucfirst(strtolower($tableName)));
 
         $model = new $modelClass();
 
-        $keys = array_keys($rows);
-
-        foreach ($keys as $key)
+        if ($rows === false)
         {
-            $model->{strtolower($key)} = $rows[strtolower($key)];
+            $model->SetState(ModelResponse::NoData());
+        }
+        else
+        {
+            if (sizeof($rows) == 0)
+            {
+                $model->SetState(ModelResponse::NoData());
+                return $model;
+            }
+            else
+            {
+                $rows = $rows[0];
+            }
+
+            $keys = array_keys($rows);
+
+            foreach ($keys as $key)
+            {
+                $model->{strtolower($key)} = $rows[strtolower($key)];
+            }
         }
 
         return $model;

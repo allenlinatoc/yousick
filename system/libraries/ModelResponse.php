@@ -39,9 +39,21 @@ class ModelResponse extends Model
         return $this->data;
     }
 
-    public static function busy()
+    static public function Busy()
     {
         return new ModelResponse(false, 'System is Busy');
+    }
+    static public function DataSaveFailed()
+    {
+        return new ModelResponse(false, "Failure on data saving");
+    }
+    static public function InvalidRequest()
+    {
+        return new ModelResponse(false, "Invalid HTTP request. Please check and try again");
+    }
+    static public function NoData()
+    {
+        return new ModelResponse(false, 'No data found or empty');
     }
 
 }

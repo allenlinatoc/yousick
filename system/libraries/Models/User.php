@@ -49,7 +49,7 @@ class User extends \Model
     public function getUsername() { return $this->username; }
 
     /**
-     * @property pangalan
+     * @property name
      */
     public function getName() { return $this->name; }
 

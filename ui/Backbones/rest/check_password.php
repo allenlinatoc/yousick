@@ -17,41 +17,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Models;
+require_once ROOT_PATH . 'includes/load_ad_username.php';
 
-/**
- * Description of Sickleave
- *
- * @author alinatoc
- */
-class Sickleave extends \Model
-{
-
-    public
-            $author,
-            $for,
-            $date,
-            $span,
-            $reason,
-            $remarks,
-            $notifstatus,
-            $read_by,
-            $read_on
-    ;
-
-    public function __construct()
-    {
-        parent::__construct('sickleave');
-        $this->SetPropertyMap(new \ComplexPropertyMap([
-            'author' => 'User',
-            'for' => 'User',
-            'read_by' => 'User'
-        ]));
-    }
-
-    public function Save()
-    {
-        parent::SaveAll();
-    }
-
-}
