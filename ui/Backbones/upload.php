@@ -25,13 +25,26 @@ if (isset($_FILES["myfile"]))
     {
         $raw_data = CSV::Parse($destPath);
 
+        // Get initial user list
+        $currentUserList = new Models\UserList();
+
+        // Initialize container
         $userList = new Models\UserList(false);
 
         // proceed with creation
         foreach ($raw_data as $row)
         {
             $user = new Models\User();
-            $user->Absorb($row);
+
+            if ($currentUserList->ContainsUsername($row['username']))
+            {
+                $user = \Models\User::FindUsername(strtolower(trim($row['username'])));
+            }
+            else
+            {
+                $user->Absorb($row);
+            }
+
             $userList->add($user);
         }
 

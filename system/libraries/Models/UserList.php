@@ -48,4 +48,16 @@ class UserList extends \ModelCollection
         return true;
     }
 
+    public function ContainsUsername($username)
+    {
+        foreach ($this as $user)
+        {
+            if (strcasecmp($user->getUsername(), strtolower(trim($username))) == 0)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
