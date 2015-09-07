@@ -15,6 +15,12 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *
+ * [REST_META]
+ *
+ * username (string)
+ *
  */
 
 header('Content-type: application/json');
@@ -25,7 +31,6 @@ if (!isset($_REQUEST['username']))
 {
     die(ModelResponse::InvalidRequest());
 }
-
 $username = trim($_REQUEST['username']);
 
 $matches = array();
@@ -35,6 +40,6 @@ if (sizeof($matches) > 0)
     $username = strtolower($matches[0]);
 
 
-$exists = (in_array($username, $users));
+$exists = has_account($username);
 
 echo new ModelResponse($exists, $exists ? 'Username exists' : 'User is not registered');

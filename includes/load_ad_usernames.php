@@ -17,13 +17,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$user_file_contents = file_get_contents(CONFIG_PATH . 'users');
-$users = array_map('rtrim', explode("\n", $user_file_contents));
 
-$keys = array_keys($users);
-
-foreach ($keys as $key)
+/**
+ * Check if a username has account
+ *
+ * @param string $username
+ * @return boolean
+ */
+function has_account($username)
 {
-    if (strlen(trim($users[$key])) == 0)
-        unset($users[$key]);
+    $user_file_contents = file_get_contents(CONFIG_PATH . 'users');
+    $users = array_map('rtrim', explode("\n", $user_file_contents));
+
+    $keys = array_keys($users);
+
+    foreach ($keys as $key)
+    {
+        if (strlen(trim($users[$key])) == 0)
+            unset($users[$key]);
+    }
+
+    return in_array($username, $users);
 }
