@@ -1,8 +1,23 @@
-<div class="jumbotron">
-    <h1>YouSick</h1>
-    <h4>A simple and lightweight sick-leave notification system</h4>
+<div class="row header">
+    <div class="col-xs-6">
+        <a href="/admin"><h1 class="logo col-xs-6">YouSick</h1></a>
+    </div>
+    <span class="col-xs-6">
+        <div class="btn-group pull-right">
+            <button  type="button" id="admin-user-btn" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                aduser <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu pull-right">
+                <li><a href="#">File Sick Leave</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Import Employee Details (CSV)</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </div>
+    </span>
 </div>
-<div class="col-md-4 col-sm-6 col-xs-9 col-centered">
+<div id="page-body" class="col-md-4 col-sm-6 col-xs-9 col-centered">
     <div id="user-header" class="row">
         <div id="name-wrapper">
             <h2>File Sick Leave</h2>
@@ -60,7 +75,7 @@
         <div class="form-group">
             <div class="col-md-3"></div>
             <div class="col-md-9">
-                <input type="submit" class="btn btn-danger" value="File Sick Leave"/>
+                <input type="submit" id="file-sl-btn" class="btn btn-danger" value="File Sick Leave"/>
             </div>
         </div>
     </form>
@@ -78,6 +93,9 @@
             sortField: {
                 field: 'text',
                 direction: 'asc'
+            },
+            onItemAdd: function(value, $item) {
+                console.log(value);
             }
         });
 
@@ -97,6 +115,14 @@
                     });
                 }
             }
+        });
+
+        $('#file-sl-btn').click(function() {
+            console.log(selectizeControl.getValue());
+        });
+
+        $('.logo').click(function() {
+            window.location.href = '/admin';
         });
     });
 </script>

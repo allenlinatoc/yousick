@@ -1,6 +1,6 @@
 <div class="row header">
     <div class="col-xs-6">
-        <h1 class="logo col-xs-6">YouSick</h1>
+        <a href="/admin"><h1 class="logo col-xs-6">YouSick</h1></a>
     </div>
     <span class="col-xs-6">
         <div class="btn-group pull-right">
@@ -8,14 +8,16 @@
                 aduser <span class="caret"></span>
             </button>
             <ul class="dropdown-menu pull-right">
-                <li><a href="#">File Sick Leave</a></li>
+                <li><a href="/admin-add" id="file-sl">File Sick Leave</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Import Employee Details (CSV)</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="#">Logout</a></li>
             </ul>
         </div>
     </span>
 </div>
-<div class="row">
+<div id="admin-page-body" class="row">
     <div class="col-sm-3">
         <h4 id="reports-header">REPORTS</h4>
         <div id="reports-nav" class="list-group">

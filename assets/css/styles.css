@@ -39,8 +39,6 @@ div.col-lg-4 div#spinnerUpload
     top: 20px;
 }
 
-
-
 div.footer
 {
     background-color: darkkhaki;
@@ -134,7 +132,7 @@ input[type="submit"].large
 {
 	background-color: transparent;
 }
-	
+
 #reports-nav > .list-group-item
 {
     border-radius: 0 !important;
