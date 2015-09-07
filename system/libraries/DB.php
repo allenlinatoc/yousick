@@ -32,7 +32,7 @@ class DB
 	// required
 	'database_type' => 'mysql',
 	'database_name' => 'yousickdb',
-	'server' => '10.32.1.94',
+	'server' => '127.0.0.1:3306',
 	'username' => 'yousick',
 	'password' => 'yousick',
 	'charset' => 'utf8',

@@ -22,6 +22,8 @@ class IndexEngine {
         mb_internal_encoding('UTF-8');
         // autoload
         spl_autoload_register(array($this, 'autoload'));
+        // initialize constants
+        $this->initializeConstants();
     }
 
     public function autoload($classname)
@@ -86,6 +88,15 @@ class IndexEngine {
             $backbonePage['file'] = '404';
         }
         RETURN ROOT_PATH.'ui/Views/'.$backbonePage['file'].'.phtml';
+    }
+
+
+
+    public function initializeConstants()
+    {
+        define( 'BASE_URL',
+                Utilities\System::GetBaseURL()
+        );
     }
 
 
