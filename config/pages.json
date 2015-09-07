@@ -1,5 +1,5 @@
 {
-    "rest-check_username": {
+    "rest/check_username": {
         "file" : "rest/check_username",
         "template" : "blank"
     },
