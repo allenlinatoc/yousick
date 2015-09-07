@@ -83,12 +83,17 @@ class IndexEngine {
     {
         $pagesJson = Utilities\Config::ReadJSON(ROOT_PATH . 'config/pages.json');
         $backbonePage = isset($pagesJson[$page]) ? $pagesJson[$page] : array($page);
-        if ( !isset($backbonePage['file']) || (isset($backbonePage['file']) && !file_exists($backbonePage['file'])) )
+        if ( !isset($backbonePage['file']) )
         {
             return false;
         }
-        $backbonePage['file'] = '404';
-        RETURN ROOT_PATH.'ui/Views/'.$backbonePage['file'].'.phtml';
+
+        $resultPath = ROOT_PATH.'ui/Views/'.$backbonePage['file'].'.phtml';
+
+        if (!file_exists($resultPath))
+            return false;
+
+        return $resultPath;
     }
 
 
