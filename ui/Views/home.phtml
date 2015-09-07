@@ -23,12 +23,16 @@
 </div>
 <div class="remodal-bg">
   <div id="qunit"></div>
-  <a href="#" data-remodal-target="modal">Call</a>
+  <a href="#" id="remodal" data-remodal-target="modal" style="display:none;">Call</a>
 </div>
 
 <div class="remodal" data-remodal-id="modal">
   <a data-remodal-action="close" class="remodal-close"></a>
-
+	<form name='AuthenticateForm'>
+		<input name="username" type="hidden">
+		<input name="password" type="password">
+		<input type="submit" value="Submit">
+	</form>
   <a data-remodal-action="cancel" class="remodal-cancel" href="#">Cancel</a>
   <a data-remodal-action="confirm" class="remodal-confirm" href="#">OK</a>
 </div>
@@ -42,26 +46,33 @@
 
 	$(document).ready(function(){
 		var username;
+		
 		$("#startForm").submit(function (e) {
+			
 			username = $("#username").val();
 			e.preventDefault();
 			$("#spinner").show();
+			
 			$.ajax({
 				data: $('#startForm').serialize(),
-				type: "POST",
+				method: "post",
 				url: "<?= BASE_URL ?>rest/check_username",
-				contentType: 'json',
+				contenttype: 'json',
 				success: function (response) {
 					if(response.success){
-							$("#change").html('');
+						$("#spinner").hide();
+						$("#username").val('');
 						console.log(response.data);
-						// for (var i=0; i < response.data.length; i++)
-						// {
-							// var row = response.data[i];
-							// $('#change').append(row.employee + ', ' + row.age + ', ' + row.company + '<br>');
-						// }
+						$('form[name=AuthenticateForm] input[name=username]').attr('value', username);
+						$("#remodal").trigger("click");
 					}
-				},
+					else{
+						$("#spinner").hide();
+						$("#username").val('');
+						alert("error");
+						console.log(response.data);
+					}
+				},	
 			});
 		});
 	});
