@@ -27,7 +27,7 @@
 </div>
 
 <div class="remodal" data-remodal-id="modal">
-  <a data-remodal-action="close" class="remodal-close"></a>
+  <a id="close" data-remodal-action="close" class="remodal-close"></a>
 	<!--form name='AuthenticateForm'>
 		<input name="username" type="hidden">
 		<input name="password" type="password">
@@ -104,12 +104,11 @@
 				data: $('#login').serialize(),
 				method: "post",
 				url: "<?= BASE_URL ?>rest/check_password",
-				contentType: 'json',
 				success: function (response) {
 					console.log(response);
 					if(response.success){
-						alert("good");
-						console.log(response.data);
+						$("#password").val('');
+						$("#close").trigger("click");
 					}
 					else{
 						alert("bad");
