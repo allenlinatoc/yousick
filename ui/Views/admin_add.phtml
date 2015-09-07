@@ -24,11 +24,11 @@
         </div>
     </div>
     <div class="vertical-space"></div>
-    <form class="row form-horizontal" name="sickleave-form" method="post">
+    <form class="row form-horizontal" id="sl-form" name="sl-form" method="post">
         <div class="form-group">
             <label for="employee-name-field" class="control-label col-md-3">Who</label>
             <div class="col-md-9 control-group">
-                <select id="employee-name-field" class="form-control" placeholder="Select employee">
+                <select id="employee-name-field" class="form-control" placeholder="Select employee" name="for_id">
                     <option value="">Select a person...</option>
                 </select>
             </div>
@@ -43,8 +43,8 @@
         <div class="form-group">
             <label for="datetimepicker" class="control-label col-md-3">Date</label>
             <div class="col-md-9">
-                <div class="input-group date" id="datetimepicker">
-                    <input type="text" class="form-control"/>
+                <div class="input-group date">
+                    <input type="text" class="form-control" id="datetimepicker" name="date"/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -54,13 +54,13 @@
             <div class="col-md-9">
                 <div class="col-md-6">
                     <label class="radio-inline">
-                        <input type="radio" name="optionsRadios" id="whole-day-radion-btn" value="1" checked>
+                        <input type="radio" name="span" id="whole-day-radion-btn" value="1" checked>
                         Whole day
                     </label>
                 </div>
                 <div class="col-md-6">
                     <label class="radio-inline">
-                        <input type="radio" name="optionsRadios" id="half-day-radion-btn" value="0.5">
+                        <input type="radio" name="span" id="half-day-radion-btn" value="0.5">
                         Half day
                     </label>
                 </div>
@@ -85,7 +85,8 @@
     $(function () {
         $('#datetimepicker').datetimepicker({
             format: 'LL',
-            defaultDate: new Date()
+            defaultDate: new Date(),
+            extraFormats: ['YYYY-MM-DD']
         });
 
         var selectize = $('#employee-name-field').selectize({
@@ -117,12 +118,33 @@
             }
         });
 
-        $('#file-sl-btn').click(function() {
-            console.log(selectizeControl.getValue());
-        });
+        $('#sl-form').submit(function(e) {
 
-        $('.logo').click(function() {
-            window.location.href = '/admin';
+            var admin_id = 4;
+
+            var jsDate = new Date($('#datetimepicker').val());
+            var date = moment(jsDate).format('YYYY-MM-DD');
+            $('#datetimepicker').val(date);
+
+            var data = $('#sl-form').serialize()+"&author_id="+admin_id;
+            console.log(data);
+            // var data = $('#sl-form').serializeArray();
+            // data.push({ author_id : admin_id });
+
+            $.ajax({
+                method: 'POST',
+                url: '/rest/create_sickleave',
+                data: data,
+                success: function(retData) {
+                    if(retData.success && retData.has_state && retData.state.success)
+                    {
+                        alert("Success");
+                    }
+                    else {
+                        alert("Failed: " + retData.message + "\n" + retData.state.message);
+                    }
+                }
+            });
         });
     });
 </script>
