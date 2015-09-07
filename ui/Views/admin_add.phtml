@@ -12,7 +12,7 @@
                 <li role="separator" class="divider"></li>
                 <li><a href="#">Import Employee Details (CSV)</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="#">Logout</a></li>
+                <li><a href="" id="logout">Logout</a></li>
             </ul>
         </div>
     </span>
@@ -81,6 +81,9 @@
     </form>
 </div>
 
+<script src="assets/3rd/js/admin.js" type="text/javascript">
+</script>
+
 <script type="text/javascript">
     $(function () {
         $('#datetimepicker').datetimepicker({
@@ -119,8 +122,6 @@
         });
 
         $('#file-sl-btn').click(function(e) {
-            var admin_id = 2;
-
             var jsDate = new Date($('#date').val());
             var date = moment(jsDate).format('YYYY-MM-DD');
             $('#date').val(date);

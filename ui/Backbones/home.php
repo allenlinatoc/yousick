@@ -8,8 +8,12 @@
 //print_r(CSV::Parse($path));
 
 
-
-
+echo \Utilities\String::Format('Hello there {{name}} your age is {{age}}'
+        , [
+            'name' => 'Allen Linatoc',
+            'age' => 10
+        ]);
+die();
 
 
 ?>
