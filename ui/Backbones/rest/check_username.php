@@ -26,12 +26,12 @@
 header('Content-type: application/json');
 
 require_once ROOT_PATH . 'includes/load_ad_usernames.php';
-$username = trim($_REQUEST['username']);
 
 if (!isset($_REQUEST['username']))
 {
     die(ModelResponse::InvalidRequest());
 }
+$username = trim($_REQUEST['username']);
 
 $matches = array();
 preg_match('/[A-Za-z0-9_\.]+/', $username, $matches);
