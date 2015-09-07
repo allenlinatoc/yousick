@@ -17,6 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+header('Content-type: application/json');
+
 $isLoggedIn = Utilities\Session::IsLoggedIn();
 
 if (!$isLoggedIn)
@@ -25,5 +27,5 @@ if (!$isLoggedIn)
 }
 else
 {
-    
+
 }

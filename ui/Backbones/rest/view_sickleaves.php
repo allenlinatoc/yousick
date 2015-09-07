@@ -18,6 +18,8 @@
  *
  */
 
+header('Content-type: application/json');
+
 $sickleaveList = new \Models\SickleaveList();
 
 die(new ModelResponse(true, null, $sickleaveList));

@@ -26,6 +26,8 @@
  *
  */
 
+header('Content-type: application/json');
+
 $expectations = [
     'author_id',
     'for_id',

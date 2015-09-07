@@ -17,6 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+header('Content-type: application/json');
+
 $users = new Models\UserList();
 
 $response = new ModelResponse(true, null, $users);
