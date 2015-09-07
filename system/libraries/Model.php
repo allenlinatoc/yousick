@@ -200,6 +200,7 @@ class Model
     /**
      * @property state
      * @complex
+     * @return ModelResponse
      */
     public function GetState()
     {

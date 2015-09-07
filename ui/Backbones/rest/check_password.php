@@ -50,7 +50,7 @@ if (!has_account($username))
 
 // Otherwise, proceed with LDAP authentication
 
-$ldapresource = ldap_connect("ldap://svg.openit.local", 389)or die("Unable to connect to ldap://svg.openit.local:389");
+$ldapresource = ldap_connect("ldap://svg.openit.local", 389) or die("Unable to connect to ldap://svg.openit.local:389");
 //$result = ldap_bind("svg.openit.local");
 
 ob_start();
