@@ -3,20 +3,59 @@
         <h1 class="logo col-xs-6">YouSick</h1>
     </div>
     <span class="col-xs-6">
-        <button id="admin-user-btn" class="btn btn-default btn-sm span-right" type="button">ausername</button>
+        <div class="btn-group pull-right">
+            <button  type="button" id="admin-user-btn" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                aduser <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu pull-right">
+                <li><a href="#">File Sick Leave</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </div>
     </span>
 </div>
 <div class="row">
-    <div class="col-md-3 no-gutter">
+    <div class="col-sm-3">
+        <h4 id="reports-header">REPORTS</h4>
         <div id="reports-nav" class="list-group">
-          <button type="button" class="list-group-item">Cras justo odio</button>
-          <button type="button" class="list-group-item">Dapibus ac facilisis in</button>
-          <button type="button" class="list-group-item">Morbi leo risus</button>
-          <button type="button" class="list-group-item">Porta ac consectetur ac</button>
-          <button type="button" class="list-group-item">Vestibulum at eros</button>
+          <button type="button" class="active list-group-item reports-nav-items">Cras justo odio</button>
+          <button type="button" class="list-group-item reports-nav-items">Dapibus ac facilisis in</button>
+          <button type="button" class="list-group-item reports-nav-items">Morbi leo risus</button>
+          <button type="button" class="list-group-item reports-nav-items">Porta ac consectetur ac</button>
+          <button type="button" class="list-group-item reports-nav-items">Vestibulum at eros</button>
         </div>
     </div>
-    <div id="report-container" class="col-md-9">
-        <h1>Sample</h1>
+    <div class="col-sm-9">
+        <h2>Report Title</h2>
+        <div id="chart-container"></div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#chart-container').highcharts({
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: 'Fruit Consumption'
+            },
+            xAxis: {
+                categories: ['Apples', 'Bananas', 'Oranges']
+            },
+            yAxis: {
+                title: {
+                    text: 'Fruit eaten'
+                }
+            },
+            series: [{
+                name: 'Jane',
+                data: [1, 0, 4]
+            }, {
+                name: 'John',
+                data: [5, 7, 3]
+            }]
+        });
+    });
+</script>
