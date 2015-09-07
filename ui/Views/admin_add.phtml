@@ -86,6 +86,7 @@
         $('#datetimepicker').datetimepicker({
             format: 'LL',
             defaultDate: new Date()
+            //extraFormats: ['YYYY-MM-DD']
         });
 
         var selectize = $('#employee-name-field').selectize({
@@ -119,6 +120,9 @@
 
         $('#file-sl-btn').click(function() {
             var admin_id = 0;
+            //var date = moment($('#datetimepicker').val(), "YYYY-MM-DD");
+            //$('#datetimepicker').val(date);
+            //console.log($('#datetimepicker').val());
             var data = $('#sl-form').serializeArray();
             //var data.date = moment(data.date, "YYYY-MM-DD");
             data.push({ author_id : admin_id });
