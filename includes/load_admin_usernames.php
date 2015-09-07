@@ -17,6 +17,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+function get_admins()
+{
+    $user_file_contents = file_get_contents(CONFIG_PATH . 'users');
+    $users = array_map('rtrim', explode("\n", $user_file_contents));
+
+    $keys = array_keys($users);
+}
+
 function is_admin($username)
 {
     $user_file_contents = file_get_contents(CONFIG_PATH . 'users');

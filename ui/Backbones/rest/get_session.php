@@ -27,5 +27,7 @@ if (!$isLoggedIn)
 }
 else
 {
-
+    $sess = Utilities\Session::Initialize();
+    $response = new ModelResponse(true, 'Success', $sess);
+    die($response);
 }

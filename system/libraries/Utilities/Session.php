@@ -35,12 +35,17 @@ class Session
         $sess = self::Initialize();
         if ($sess instanceof \Models\SessionData)
         {
-            return $sess->getUsername() != null;
+            return $sess->getUser() != null;
         }
         else
         {
             return false;
         }
+    }
+
+    static public function LogIn($username)
+    {
+        $_SESSION[self::SESSION_KEY] = new \Models\SessionData($username);
     }
 
     static public function Initialize()

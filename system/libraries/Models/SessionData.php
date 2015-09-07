@@ -27,25 +27,25 @@ namespace Models;
 class SessionData extends \Model
 {
 
-    public $username;
+    public $user;
     public $session_id;
 
     public function __construct($username)
     {
-        $this->username = $username;
+        $this->user = $username != null ? User::FindUsername($username) : null;
         $this->sessionId = session_id();
     }
 
     /**
-     * @property username
-     * @return string
-     */
-    public function getUsername() { return $this->username; }
-
-    /**
      * @property session_id
-     * @return string
      */
     public function getSessionID() { return $this->session_id; }
+
+    /**
+     * @property user
+     * @complex
+     * @return string
+     */
+    public function getUser() { return $this->user; }
 
 }

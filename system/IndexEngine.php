@@ -24,6 +24,8 @@ class IndexEngine {
         spl_autoload_register(array($this, 'autoload'));
         // initialize constants
         $this->initializeConstants();
+        // start session
+        session_start();
     }
 
     public function autoload($classname)
@@ -47,7 +49,7 @@ class IndexEngine {
             $request = $matches[0];
             $page = $request;
         }
-        
+
         RETURN $page;
     }
 
