@@ -22,6 +22,8 @@ class IndexEngine {
         mb_internal_encoding('UTF-8');
         // autoload
         spl_autoload_register(array($this, 'autoload'));
+        // initialize constants
+        $this->initializeConstants();
     }
 
     public function autoload($classname)
@@ -34,15 +36,18 @@ class IndexEngine {
 
     public function getPage($page=self::DEFAULT_PAGE)
     {
-        for ( $index=0,reset($_GET); $index<count($_GET); next($_GET),$index++ )
+        $uri = trim($_SERVER['REQUEST_URI'], '/');
+
+        if (strlen($uri) > 0)
         {
-            $key = key($_GET);
-            if ( $index === self::PAGE_PARAM_INDEX )
-            {
-                $page = $key;
-                BREAK;
-            }
+            // Get Request
+            $matches = array();
+            preg_match('/^[A-Za-z0-9\%-_][^&]+/', $uri, $matches);
+
+            $request = $matches[0];
+            $page = $request;
         }
+
         RETURN $page;
     }
 
@@ -83,9 +88,28 @@ class IndexEngine {
         $backbonePage = isset($pagesJson[$page]) ? $pagesJson[$page] : array($page);
         if ( !isset($backbonePage['file']) )
         {
-            $backbonePage['file'] = '404';
+            return false;
         }
-        RETURN ROOT_PATH.'ui/Views/'.$backbonePage['file'].'.phtml';
+
+        $resultPath = ROOT_PATH.'ui/Views/'.$backbonePage['file'].'.phtml';
+
+        if (!file_exists($resultPath))
+            return false;
+
+        return $resultPath;
+    }
+
+
+
+    public function initializeConstants()
+    {
+        define( 'BASE_URL',
+                Utilities\System::GetBaseURL()
+        );
+
+        define( 'CONFIG_PATH',
+                ROOT_PATH . 'config/'
+        );
     }
 
 
@@ -96,8 +120,12 @@ class IndexEngine {
         REQUIRE_ONCE $this->getBackboneFile($page);
 
         ob_start();
-        require_once $this->getViewFile($page);
+        $view = $this->getViewFile($page);
+        if ($view !== false)
+            REQUIRE_ONCE $view;
+
         $_VIEW = ob_get_clean();
+
         REQUIRE_ONCE $this->getTemplateFile($page);
     }
 
