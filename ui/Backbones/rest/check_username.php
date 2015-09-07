@@ -42,7 +42,6 @@ preg_match('/[A-Za-z0-9_\.]+/', $username, $matches);
 if (sizeof($matches) > 0)
     $username = strtolower($matches[0]);
 
-
 $exists = has_account($username);
 
 echo new ModelResponse($exists, $exists ? 'Username exists' : 'User is not registered');

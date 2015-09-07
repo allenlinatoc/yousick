@@ -27,8 +27,9 @@
 function has_account($username)
 {
     $user_file_contents = file_get_contents(CONFIG_PATH . 'users');
-    $users = array_walk('rtrim', explode("\n", $user_file_contents));
-    $users = array_walk('rtrim', $users, '*');
+    $exploded = explode("\n", $user_file_contents);
+    $users = array_map("rtrim", $exploded);
+    $users = array_map("rtrim", $users, [ '*' ]);
 
     $keys = array_keys($users);
 
