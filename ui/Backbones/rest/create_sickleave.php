@@ -54,4 +54,7 @@ $newSickleave->Absorb($raw_data);
 if (!$newSickleave->SaveAll())
     die(ModelResponse::DataSaveFailed());
 
+
+// Otherwise, success
+
 die(new ModelResponse(true, "Sick leave entry has been successfully added!", $newSickleave));
