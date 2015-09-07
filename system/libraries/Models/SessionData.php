@@ -20,28 +20,32 @@
 namespace Models;
 
 /**
- * Description of UserList
+ * Description of SessionData
  *
  * @author alinatoc
  */
-class UserList extends \ModelCollection
+class SessionData extends \Model
 {
 
-    public function __construct($fetch = true)
+    public $username;
+    public $session_id;
+
+    public function __construct($username)
     {
-        parent::__construct('user', $fetch);
+        $this->username = $username;
+        $this->sessionId = session_id();
     }
 
-    public function ContainsUsername($username)
-    {
-        foreach ($this as $user)
-        {
-            if (strcasecmp($user->getUsername(), strtolower(trim($username))) == 0)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
+    /**
+     * @property username
+     * @return string
+     */
+    public function getUsername() { return $this->username; }
+
+    /**
+     * @property session_id
+     * @return string
+     */
+    public function getSessionID() { return $this->session_id; }
 
 }

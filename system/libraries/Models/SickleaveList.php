@@ -20,28 +20,16 @@
 namespace Models;
 
 /**
- * Description of UserList
+ * Description of SickleaveList
  *
  * @author alinatoc
  */
-class UserList extends \ModelCollection
+class SickleaveList extends \ModelCollection
 {
 
     public function __construct($fetch = true)
     {
-        parent::__construct('user', $fetch);
-    }
-
-    public function ContainsUsername($username)
-    {
-        foreach ($this as $user)
-        {
-            if (strcasecmp($user->getUsername(), strtolower(trim($username))) == 0)
-            {
-                return true;
-            }
-        }
-        return false;
+        parent::__construct('sickleave', $fetch);
     }
 
 }

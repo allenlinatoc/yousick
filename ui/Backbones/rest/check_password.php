@@ -24,6 +24,8 @@
  *
  */
 
+header('Content-type: application/json');
+
 require_once ROOT_PATH . 'includes/load_ad_usernames.php';
 
 // Check requests

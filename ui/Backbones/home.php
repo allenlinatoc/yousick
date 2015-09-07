@@ -35,4 +35,24 @@
 //$p->extractTo(ROOT_PATH . 'core');
 
 
+//$sickleave = \Models\Sickleave::Find(1, 'sickleave');
+//echo $sickleave;
+
+//$sick = new \Models\Sickleave();
+//$sick->Absorb([
+//    'author_id' => 6,
+//    'for_id' => 6,
+//    'date' => '2015-09-07',
+//    'span' => 0.5,
+//    'reason' => 'Wala lang'
+//]);
+//
+//$sick->SaveAll();
+//
+//echo $sick;
+
+//$sicks = new \Models\SickleaveList();
+//echo $sicks;
+//die();
+
 ?>

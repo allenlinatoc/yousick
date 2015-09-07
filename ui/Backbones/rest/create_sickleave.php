@@ -15,11 +15,43 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * [REST_META]
+ *
+ * author_id (int)
+ * for_id (int)
+ * date (mysql date)
+ * span (decimal)
+ * reason (string)
+ *
  */
 
 header('Content-type: application/json');
 
-$users = new Models\UserList();
+$expectations = [
+    'author_id',
+    'for_id',
+    'date',
+    'span',
+    'reason'
+];
 
-$response = new ModelResponse(true, null, $users);
-echo $response;
+if (!\Utilities\Requests::HasRequest($expectations))
+{
+    die(ModelResponse::InvalidRequest());
+}
+
+$raw_data = [];
+foreach ($_REQUEST as $key => $value)
+{
+    if (in_array($key, $expectations))
+        $raw_data[$key] = $value;
+}
+
+$newSickleave = new \Models\Sickleave();
+$newSickleave->Absorb($raw_data);
+
+if (!$newSickleave->SaveAll())
+    die(ModelResponse::DataSaveFailed());
+
+die(new ModelResponse(true, "Sick leave entry has been successfully added!", $newSickleave));

@@ -55,6 +55,10 @@ class ModelResponse extends Model
     {
         return new ModelResponse(false, 'No data found or empty');
     }
+    static public function NoSession()
+    {
+        return new ModelResponse(false, 'User is not logged in');
+    }
 
 }
 

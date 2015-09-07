@@ -17,31 +17,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Models;
+header('Content-type: application/json');
 
-/**
- * Description of UserList
- *
- * @author alinatoc
- */
-class UserList extends \ModelCollection
+$isLoggedIn = Utilities\Session::IsLoggedIn();
+
+if (!$isLoggedIn)
 {
-
-    public function __construct($fetch = true)
-    {
-        parent::__construct('user', $fetch);
-    }
-
-    public function ContainsUsername($username)
-    {
-        foreach ($this as $user)
-        {
-            if (strcasecmp($user->getUsername(), strtolower(trim($username))) == 0)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
+    die(ModelResponse::NoSession());
+}
+else
+{
 
 }

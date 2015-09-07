@@ -17,31 +17,38 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Models;
+namespace Utilities;
 
 /**
- * Description of UserList
+ * Description of Session
  *
  * @author alinatoc
  */
-class UserList extends \ModelCollection
+class Session
 {
 
-    public function __construct($fetch = true)
+    const SESSION_KEY = 'SESSION';
+
+
+    static public function IsLoggedIn()
     {
-        parent::__construct('user', $fetch);
+        $sess = self::Initialize();
+        if ($sess instanceof \Models\SessionData)
+        {
+            return $sess->getUsername() != null;
+        }
+        else
+        {
+            return false;
+        }
     }
 
-    public function ContainsUsername($username)
+    static public function Initialize()
     {
-        foreach ($this as $user)
-        {
-            if (strcasecmp($user->getUsername(), strtolower(trim($username))) == 0)
-            {
-                return true;
-            }
-        }
-        return false;
+        if (!isset($_SESSION[self::SESSION_KEY]))
+            $_SESSION[self::SESSION_KEY] = new \Models\SessionData(null);
+
+        return $_SESSION[self::SESSION_KEY];
     }
 
 }

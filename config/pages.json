@@ -3,14 +3,29 @@
         "file" : "rest/check_username",
         "template" : "blank"
     },
+    
     "rest/check_password": {
         "file" : "rest/check_password",
         "template" : "blank"
     },
+    
+    "rest/create_sickleave": {
+        "file" : "rest/create_sickleave",
+        "template" : "blank"
+    },
+    
     "rest/view_employees": {
         "file" : "rest/view_employees",
         "template" : "blank"
     },
+    
+    "rest/view_sickleaves": {
+        "file" : "rest/view_sickleaves",
+        "template" : "blank"
+    },
+    
+    
+    
     
     "home": {
         "file" : "home"

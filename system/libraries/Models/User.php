@@ -68,10 +68,23 @@ class User extends \Model
      */
     public function getCreatedOn() { return $this->created_on; }
 
+    /**
+     * @property is_admin
+     */
+    public function isAdmin()
+    {
+
+    }
+
 
     public function Save()
     {
-        parent::SaveAll([ 'created_on' ]);
+        parent::SaveAll([ 'is_admin' ]);
+    }
+
+    public function SaveAll()
+    {
+        return parent::SaveAll([ 'is_admin' ]);
     }
 
 
