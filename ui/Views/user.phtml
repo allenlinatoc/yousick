@@ -1,11 +1,23 @@
-<div class="jumbotron">
-    <h1>YouSick</h1>
-    <h4>A simple and lightweight sick-leave notification system</h4>
+<div class="row header">
+    <div class="col-xs-6">
+        <a href="/admin"><h1 class="logo col-xs-6">YouSick</h1></a>
+    </div>
+    <span class="col-xs-6">
+        <div class="btn-group pull-right">
+            <button  type="button" id="user-btn" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            </button>
+            <ul class="dropdown-menu pull-right">
+                <li><a href="/user">File Sick Leave</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="" id="logout">Logout</a></li>
+            </ul>
+        </div>
+    </span>
 </div>
 <div class="col-md-4 col-sm-6 col-xs-9 col-centered">
     <div id="user-header" class="row">
         <div id="name-wrapper">
-            <h2 id="name">Name</h2>
+            <h2 id="name">Loading...</h2>
             <label><strong>0/15</strong> Sick Leave Filed</label>
             <span class="pull-right">
                 <a href="">See history</a>
@@ -18,7 +30,7 @@
             <label for="datetimepicker" class="control-label col-md-3">Date</label>
             <div class="col-md-9">
                 <div class="input-group date" id="datetimepicker">
-                    <input name="date" type="text" class="form-control"/>
+                    <input id="date" name="date" type="text" class="form-control"/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -55,61 +67,49 @@
     </form>
 </div>
 
+<script src="assets/3rd/js/user.js" type="text/javascript"></script>
+
 <script type="text/javascript">
-	var author_id;
-    $(function () {
-        $('#datetimepicker').datetimepicker({
-            format: 'LL',
-            defaultDate: new Date()
+    $.ajax({
+        dataType: 'json',
+        url: '/rest/get_session',
+        success: function(session) {
+            if (session.success)
+                $('#name').html(session.data.user.name);
+        }
+    });
+
+    $('#datetimepicker').datetimepicker({
+        format: 'LL',
+        defaultDate: new Date()
+    });
+
+    $("#fileSickLeave").submit(function (e) {
+        e.preventDefault();
+
+        var jsDate = new Date($('#date').val());
+        var date = moment(jsDate).format('YYYY-MM-DD');
+        $('#date').val(date);
+
+        var data = $('#fileSickLeave').serialize()+"&author_id="+user_id+"&for_id="+user_id;
+        console.log(data);
+
+        $.ajax({
+            method: 'POST',
+            url: '/rest/create_sickleave',
+            data: data,
+            success: function(retData) {
+                if(retData.success)
+                {
+                    alert("Success: " + retData.message);
+                }
+                else {
+                    if (retData.has_state && !retData.data.state.success)
+                        alert("Failed: " + retData.data.state.message);
+                    else
+                        alert("Failed: " + retData.message);
+                }
+            }
         });
     });
-	$(document).ready(function(){
-		$.ajax({
-				dataType: 'json',
-				url: '/rest/view_employees',
-				success: function(employees) {
-					if (employees.success)
-					{
-						for(var i = 0; i < employees.data.collection.length; i++)
-						{
-							var row = employees.data.collection[i];
-							if(row.username=="rdognidon")
-							{
-								author_id = row.ID;
-								$('#name').text(row.name);
-							}
-							//$('#name').append(row.name + "<br>");
-						}
-					}
-				}
-			});
-		$("#fileSickLeave").submit(function (e) {
-			e.preventDefault();
-
-			var jsDate = new Date($('#date').val());
-			var date = moment(jsDate).format('YYYY-MM-DD');
-			$('#date').val(date);
-
-			var data = $('#fileSickLeave').serialize()+"&author_id="+author_id+"&for_id="+author_id;
-			console.log(data);
-
-			$.ajax({
-                method: 'POST',
-                url: '/rest/create_sickleave',
-                data: data,
-                success: function(retData) {
-                    if(retData.success)
-                    {
-                        alert("Success: " + retData.message);
-                    }
-                    else {
-                        if (retData.has_state && !retData.data.state.success)
-                            alert("Failed: " + retData.data.state.message);
-                        else
-                            alert("Failed: " + retData.message);
-                    }
-                }
-            });
-		});
-	});
 </script>

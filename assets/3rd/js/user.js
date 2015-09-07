@@ -1,4 +1,4 @@
-var admin_id = 0;
+var user_id = 0;
 
 $.ajax({
     dataType: 'json',
@@ -6,9 +6,9 @@ $.ajax({
     success: function(session) {
         if (session.success)
         {
-            admin_id = session.data.user.ID;
+            user_id = session.data.user.ID;
             var htmlText = session.data.user.username + "  <span class='caret'></span>"
-            $('#admin-user-btn').html(htmlText)
+            $('#user-btn').html(htmlText)
         }
     }
 });

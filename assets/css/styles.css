@@ -118,11 +118,6 @@ input[type="submit"].large
     height: 30px;
 }
 
-#admin-user-btn
-{
-	margin-top: 9px;
-}
-
 #chart-container
 {
 	width: 100%;
@@ -150,6 +145,11 @@ input[type="submit"].large
 #sl-count-wrapper
 {
     background-color: #cd172d;
+}
+
+#user-btn
+{
+	margin-top: 9px;
 }
 
 #user-header
