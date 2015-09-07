@@ -15,34 +15,15 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-
-/**
- * Check if a username has account
  *
- * @param string $username
- * @return boolean
+ * [REST_META]
+ *
+ * id (int)
+ *
  */
-function has_account($username)
-{
-    $user_file_contents = file_get_contents(CONFIG_PATH . 'users');
-    $users = array_map('rtrim', explode("\n", $user_file_contents));
-    $users = array_map('rtrim', $users, '*');
 
-    $keys = array_keys($users);
+$expectations = [ 'id' ];
 
-    foreach ($keys as $key)
-    {
-        $uname = $users[$key];
+if (!\Utilities\Requests::HasRequest($expectations))
+    die(ModelResponse::InvalidRequest());
 
-        // Bypass empty
-        if (strlen($uname) == 0)
-            continue;
-        
-        if (strlen(trim($users[$key])) == 0)
-            unset($users[$key]);
-    }
-
-    return in_array($username, $users);
-}
