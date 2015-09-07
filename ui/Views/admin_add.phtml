@@ -119,8 +119,6 @@
         });
 
         $('#file-sl-btn').click(function(e) {
-            e.preventDefault();
-
             var admin_id = 2;
 
             var jsDate = new Date($('#date').val());
@@ -135,14 +133,15 @@
                 url: '/rest/create_sickleave',
                 data: data,
                 success: function(retData) {
-                    if(retData.success && retData.data.state.success)
+                    if(retData.success)
                     {
-                        alert("Success");
+                        alert("Success: " + retData.message);
                     }
                     else {
-                        alert("Failed: " + retData.message);
-                        if (!retData.data.state.success)
-                            alert(retData.data.state.message);
+                        if (retData.has_state && !retData.data.state.success)
+                            alert("Failed: " + retData.data.state.message);
+                        else
+                            alert("Failed: " + retData.message);
                     }
                 }
             });
