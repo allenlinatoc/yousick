@@ -15,36 +15,31 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-
-/**
- * Check if a username has account
  *
- * @param string $username
- * @return boolean
+ * [REST_META]
+ *
+ * username (string)
+ *
  */
-function has_account($username)
+
+require_once ROOT_PATH . 'includes/load_admin_usernames.php';
+
+$expectations = [ 'username' ];
+
+if (!\Utilities\Requests::HasRequest($expectations))
 {
-    $user_file_contents = file_get_contents(CONFIG_PATH . 'users');
-    $exploded = explode("\n", $user_file_contents);
-    $users = array_map("rtrim", $exploded);
+    die(ModelResponse::InvalidRequest());
+}
 
+$is_admin = is_admin($_REQUEST['username']);
+$user = null;
 
-    $keys = array_keys($users);
-
-    foreach ($keys as $key)
-    {
-        $users[$key] = rtrim($users[$key], '*');
-        $uname = $users[$key];
-
-        // Bypass empty
-        if (strlen($uname) == 0)
-            continue;
-
-        if (strlen(trim($users[$key])) == 0)
-            unset($users[$key]);
-    }
-
-    return in_array($username, $users);
+if ($is_admin)
+{
+    $user = \Models\User::FindUsername($_REQUEST['username']);
+    die(new ModelResponse(true, 'Yes, an admin', $user));
+}
+else
+{
+    die(new ModelResponse(false, sprintf('User \"%s\" is not an admin', $_REQUEST['username'])));
 }

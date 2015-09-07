@@ -17,34 +17,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-/**
- * Check if a username has account
- *
- * @param string $username
- * @return boolean
- */
-function has_account($username)
+function is_admin($username)
 {
     $user_file_contents = file_get_contents(CONFIG_PATH . 'users');
-    $exploded = explode("\n", $user_file_contents);
-    $users = array_map("rtrim", $exploded);
-
+    $users = array_map('rtrim', explode("\n", $user_file_contents));
 
     $keys = array_keys($users);
 
     foreach ($keys as $key)
     {
-        $users[$key] = rtrim($users[$key], '*');
         $uname = $users[$key];
 
         // Bypass empty
         if (strlen($uname) == 0)
             continue;
 
-        if (strlen(trim($users[$key])) == 0)
-            unset($users[$key]);
+        if ($uname{strlen($uname) - 1} != '*')
+            continue;
+
+        if (strcasecmp(rtrim($uname, '*'), $username) === 0)
+            return true;
     }
 
-    return in_array($username, $users);
+    return false;
 }

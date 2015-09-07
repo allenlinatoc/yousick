@@ -14,6 +14,11 @@
         "template" : "blank"
     },
     
+    "rest/is_admin": {
+        "file" : "rest/is_admin",
+        "template" : "blank"
+    },
+    
     "rest/view_employees": {
         "file" : "rest/view_employees",
         "template" : "blank"
