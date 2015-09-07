@@ -11,6 +11,5 @@ define( 'APPLICATION_INI',
         rtrim( ROOT_PATH . 'config/application.ini' )
 );
 
-
 $index = new IndexEngine();
 $index->run();

@@ -36,15 +36,15 @@ class IndexEngine {
 
     public function getPage($page=self::DEFAULT_PAGE)
     {
-        for ( $index=0,reset($_GET); $index<count($_GET); next($_GET),$index++ )
+        $uri = trim($_SERVER['REQUEST_URI'], '/');
+
+        if (strlen($uri) > 0)
         {
-            $key = key($_GET);
-            if ( $index === self::PAGE_PARAM_INDEX )
-            {
-                $page = $key;
-                BREAK;
-            }
+            // Get Request
+            $request = strpos('/', $uri) !== false ? substr($uri, 0, strpos('/', $uri)) : $uri;
+            $page = $request;
         }
+
         RETURN $page;
     }
 
