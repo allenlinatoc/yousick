@@ -28,13 +28,24 @@
 
 <div class="remodal" data-remodal-id="modal">
   <a data-remodal-action="close" class="remodal-close"></a>
-	<form name='AuthenticateForm'>
+	<!--form name='AuthenticateForm'>
 		<input name="username" type="hidden">
 		<input name="password" type="password">
-		<input type="submit" value="Submit">
+		<input type="submit" value="Submit"-->
+        <h2>Enter Password</h2>
+        <br>
 	</form>
-  <a data-remodal-action="cancel" class="remodal-cancel" href="#">Cancel</a>
-  <a data-remodal-action="confirm" class="remodal-confirm" href="#">OK</a>
+		<form name="AuthenticateForm" method="post">			
+		<input name="username" type="hidden">
+			<span class="input-group">
+				<input type="password" class="form-control textbox-large" name="password">
+				<span class="input-group-btn">
+					<input type="submit" id="enterPass" class="btn btn-danger large" value="Submit">
+				</span>
+			</span>
+		</form>
+  <!--a data-remodal-action="cancel" class="remodal-cancel" href="#">Cancel</a>
+  <a data-remodal-action="confirm" class="remodal-confirm" href="#">OK</a-->
 </div>
 </script>
 
