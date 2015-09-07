@@ -15,11 +15,18 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *
+ * [REST_META]
+ *
+ * username (string)
+ *
  */
 
 header('Content-type: application/json');
 
 require_once ROOT_PATH . 'includes/load_ad_usernames.php';
+$username = trim($_REQUEST['username']);
 
 var_dump($_REQUEST);
 var_dump($_POST);
@@ -30,8 +37,6 @@ if (!isset($_REQUEST['username']))
     die(ModelResponse::InvalidRequest());
 }
 
-$username = trim($_REQUEST['username']);
-
 $matches = array();
 preg_match('/[A-Za-z0-9_\.]+/', $username, $matches);
 
@@ -39,6 +44,6 @@ if (sizeof($matches) > 0)
     $username = strtolower($matches[0]);
 
 
-$exists = (in_array($username, $users));
+$exists = has_account($username);
 
 echo new ModelResponse($exists, $exists ? 'Username exists' : 'User is not registered');

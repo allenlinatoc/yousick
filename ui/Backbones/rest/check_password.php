@@ -15,7 +15,13 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *
+ * [REST_META]
+ *
+ * username (string)
+ * password (string)
+ *
  */
 
 require_once ROOT_PATH . 'includes/load_ad_username.php';
-
