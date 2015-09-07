@@ -94,21 +94,22 @@
 			console.log(data);
 
 			$.ajax({
-				method: 'POST',
-				url: '/rest/create_sickleave',
-				data: data,
-				success: function(retData) {
-					if(retData.success && retData.data.state.success)
-					{
-						alert("Success");
-					}
-					else {
-						alert("Failed: " + retData.message);
-						if (!retData.data.state.success)
-							alert(retData.data.state.message);
-					}
-				}
-			});
+                method: 'POST',
+                url: '/rest/create_sickleave',
+                data: data,
+                success: function(retData) {
+                    if(retData.success)
+                    {
+                        alert("Success: " + retData.message);
+                    }
+                    else {
+                        if (retData.has_state && !retData.data.state.success)
+                            alert("Failed: " + retData.data.state.message);
+                        else
+                            alert("Failed: " + retData.message);
+                    }
+                }
+            });
 		});
 	});
 </script>
