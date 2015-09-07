@@ -27,8 +27,8 @@
 function has_account($username)
 {
     $user_file_contents = file_get_contents(CONFIG_PATH . 'users');
-    $users = array_map('rtrim', explode("\n", $user_file_contents));
-    $users = array_map('rtrim', $users, '*');
+    $users = array_walk('rtrim', explode("\n", $user_file_contents));
+    $users = array_walk('rtrim', $users, '*');
 
     $keys = array_keys($users);
 
@@ -39,7 +39,7 @@ function has_account($username)
         // Bypass empty
         if (strlen($uname) == 0)
             continue;
-        
+
         if (strlen(trim($users[$key])) == 0)
             unset($users[$key]);
     }

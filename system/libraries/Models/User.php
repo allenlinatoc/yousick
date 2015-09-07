@@ -73,8 +73,15 @@ class User extends \Model
      */
     public function isAdmin()
     {
-        require_once ROOT_PATH . '/includes/load_admin_usernames.php';
-        return is_admin($this->getUsername());
+        if ($this->getUsername() !== null)
+        {
+            require_once ROOT_PATH . '/includes/load_admin_usernames.php';
+            return is_admin($this->getUsername());
+        }
+        else
+        {
+            return null;
+        }
     }
 
 
