@@ -7,7 +7,19 @@
     "home": {
         "file" : "home"
     },
+<<<<<<< HEAD
+	
+	"home2": {
+        "file" : "home2",
+		"template" : "service"
+    },
+	
+	"upload": {
+        "file" : "upload"
+    },
     
+=======
+
     "user": {
         "file" : "user",
         "template" : "form"
@@ -23,13 +35,10 @@
         "template" : "form"
     },
 
+>>>>>>> bcaff763a0d8f2d034541f6a5455358fd6af47e8
     "aboutus": {
         "file" : "about-us"
     },
-	
-	"upload": {
-		"file" : "upload"
-	},
 
     "404": {
         "template" : "404"

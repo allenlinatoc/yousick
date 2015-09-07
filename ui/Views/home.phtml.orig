@@ -29,7 +29,42 @@
 <div class="remodal" data-remodal-id="modal">
   <a data-remodal-action="close" class="remodal-close"></a>
 
+<<<<<<< HEAD
   <a data-remodal-action="cancel" class="remodal-cancel" href="#">Cancel</a>
   <a data-remodal-action="confirm" class="remodal-confirm" href="#">OK</a>
 </div>
+=======
+<script type="text/javascript">
+//    var formSelector = 'form[name="UsernameForm"]';
+//
+//    $(formSelector).submit(function() {
+//        var $data = $(formSelector).serialize();
+//
+//        $('input[type="submit"]').attrib('disabled', 'disabled');
+//
+//        $.ajax({
+//           url: '/?serve-checkusername',
+//           data: $data,
+//           dataType: 'json',
+//           success: function(text)
+//           {
+//               if (text == "success")
+//               {
+//
+//               }
+//           }
+//        });
+//    });
 </script>
+    $(document).ready(function () {
+
+        // Focus on form
+        $('input[name=username]').focus();
+
+
+        $("#START").click(function () {
+            $("#spinner").show();
+        });
+    });
+</script>
+>>>>>>> bcaff763a0d8f2d034541f6a5455358fd6af47e8

@@ -34,6 +34,5 @@
 //$p = new Phar(ROOT_PATH . 'core.phar');
 //$p->extractTo(ROOT_PATH . 'core');
 
-die();
 
 ?>
