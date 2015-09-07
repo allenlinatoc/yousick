@@ -43,8 +43,8 @@
         <div class="form-group">
             <label for="datetimepicker" class="control-label col-md-3">Date</label>
             <div class="col-md-9">
-                <div class="input-group date">
-                    <input type="text" class="form-control" id="datetimepicker" name="date"/>
+                <div id="datetimepicker" class="input-group date">
+                    <input type="text" class="form-control" id="date" name="date"/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -118,30 +118,30 @@
             }
         });
 
-        $('#sl-form').submit(function(e) {
+        $('#file-sl-btn').click(function(e) {
+            var admin_id = 2;
 
-            var admin_id = 4;
-
-            var jsDate = new Date($('#datetimepicker').val());
+            var jsDate = new Date($('#date').val());
             var date = moment(jsDate).format('YYYY-MM-DD');
-            $('#datetimepicker').val(date);
+            $('#date').val(date);
 
             var data = $('#sl-form').serialize()+"&author_id="+admin_id;
             console.log(data);
-            // var data = $('#sl-form').serializeArray();
-            // data.push({ author_id : admin_id });
 
             $.ajax({
                 method: 'POST',
                 url: '/rest/create_sickleave',
                 data: data,
                 success: function(retData) {
-                    if(retData.success && retData.has_state && retData.state.success)
+                    if(retData.success)
                     {
-                        alert("Success");
+                        alert("Success: " + retData.message);
                     }
                     else {
-                        alert("Failed: " + retData.message + "\n" + retData.state.message);
+                        if (retData.has_state && !retData.data.state.success)
+                            alert("Failed: " + retData.data.state.message);
+                        else
+                            alert("Failed: " + retData.message);
                     }
                 }
             });
