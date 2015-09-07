@@ -34,13 +34,18 @@ class UserList extends \ModelCollection
 
     public function Create()
     {
+
         foreach ($this as $user)
         {
             if ($user instanceof User && !$user->Exists())
             {
                 $user->SaveAll();
+                if ($user->HasState() && !$user->GetState()->IsSuccess())
+                    return false;
             }
         }
+
+        return true;
     }
 
 }

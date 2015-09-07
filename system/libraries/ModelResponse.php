@@ -17,7 +17,7 @@ class ModelResponse extends Model
     /**
      * @property success
      */
-    public function getSuccess()
+    public function IsSuccess()
     {
         return $this->success;
     }
@@ -41,7 +41,7 @@ class ModelResponse extends Model
 
     static public function Busy()
     {
-        return new ModelResponse(false, 'System is Busy');
+        return new ModelResponse(false, 'Service is not available. Please try again later.');
     }
     static public function DataSaveFailed()
     {
