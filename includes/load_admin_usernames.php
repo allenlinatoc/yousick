@@ -23,6 +23,20 @@ function get_admins()
     $users = array_map('rtrim', explode("\n", $user_file_contents));
 
     $keys = array_keys($users);
+
+    $admins = array();
+
+    foreach ($keys as $key)
+    {
+        $username = $users[$key];
+
+        if ($username{strlen($username) - 1} == '*')
+        {
+            array_push($admins, trim($username, '*'));
+        }
+    }
+
+    return $admins;
 }
 
 function is_admin($username)

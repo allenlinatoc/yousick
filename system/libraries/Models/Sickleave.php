@@ -55,15 +55,27 @@ class Sickleave extends \Model
 
     /**
      * @property author_id
+     * @complex
      * @return \Models\User
      */
-    public function getAuthor() { return $this->author_id; }
+    public function getAuthor()
+    {
+        $author_id = $this->author_id;
+        $user = User::Find($author_id, 'user');
+        return $user;
+    }
 
     /**
      * @property for_id
+     * @complex
      * @return \Models\User
      */
-    public function getFor() { return $this->for_id; }
+    public function getFor()
+    {
+        $for_id = $this->for_id;
+        $user = User::Find($for_id, 'user');
+        return $user;
+    }
 
     /**
      * @property date
@@ -96,9 +108,15 @@ class Sickleave extends \Model
 
     /**
      * @property read_by
+     * @complex
      * @return \Models\User
      */
-    public function getReadBy() { return $this->read_by; }
+    public function getReadBy()
+    {
+        $userid = $this->read_by;
+        $user = User::Find($userid, 'user');
+        return $user;
+    }
 
     /**
      * @property read_on
