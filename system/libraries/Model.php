@@ -378,7 +378,7 @@ class Model
             'id' => $id
         ]);
 
-        $modelClass = sprintf('\Models\%s', ucfirst(strtolower($tableName)));
+        $modelClass = sprintf('\\Models\\%s', ltrim(ucfirst(strtolower($tableName)), '\\Models\\'));
 
         $model = new $modelClass();
 

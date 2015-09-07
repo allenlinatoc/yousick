@@ -17,19 +17,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Utilities;
+namespace Models\Reports;
 
 /**
- * Description of System
+ * Description of YearlyIndividual
  *
  * @author alinatoc
  */
-class System
+class YearlyOverallList extends \ModelCollection
 {
 
-    static public function GetBaseURL()
+    public
+            $yearmonth,
+            $count;
+
+    public function __construct($fetch = true)
     {
-        return rtrim(Config::get('base_url', APPLICATION_INI), '/') . '/';
+        parent::__construct('Reports\YearlyOverall', $fetch);
     }
 
 }

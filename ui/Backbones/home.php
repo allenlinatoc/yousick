@@ -7,5 +7,8 @@
 
 //print_r(CSV::Parse($path));
 
+$monthlyIndividual = new \Models\Reports\MonthlyIndividualList();
+die(new ModelResponse(true, 'Success', $monthlyIndividual));
+
 
 ?>

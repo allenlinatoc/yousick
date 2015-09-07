@@ -39,6 +39,15 @@
         "template" : "blank"
     },
     
+    "rest/reports/monthly": {
+        "file" : "rest/reports/monthly",
+        "template" : "blank"
+    },
+    "rest/reports/yearly": {
+        "file" : "rest/reports/yearly",
+        "template" : "blank"
+    },
+    
     
     
     
