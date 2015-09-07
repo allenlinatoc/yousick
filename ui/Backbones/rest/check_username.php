@@ -21,18 +21,18 @@ header('Content-type: application/json');
 
 require_once ROOT_PATH . 'includes/load_ad_usernames.php';
 
-if (!isset($_POST['username']))
+if (!isset($_REQUEST['username']))
 {
     die(ModelResponse::InvalidRequest());
 }
 
-$username = trim($_POST['username']);
+$username = trim($_REQUEST['username']);
 
 $matches = array();
 preg_match('/[A-Za-z0-9_\.]+/', $username, $matches);
 
 if (sizeof($matches) > 0)
-    $username = strtolower($username[0]);
+    $username = strtolower($matches[0]);
 
 
 $exists = (in_array($username, $users));

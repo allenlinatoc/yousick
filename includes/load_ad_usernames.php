@@ -18,7 +18,7 @@
  */
 
 $user_file_contents = file_get_contents(CONFIG_PATH . 'users');
-$users = explode(PHP_EOL, $user_file_contents);
+$users = array_map('rtrim', explode("\n", $user_file_contents));
 
 $keys = array_keys($users);
 
