@@ -2,11 +2,26 @@
     "home": {
         "file" : "home"
     },
-    
+
+    "user": {
+        "file" : "user",
+        "template" : "form"
+    },
+
+    "admin": {
+        "file" : "admin",
+        "template" : "admin"
+    },
+
+    "admin-add": {
+        "file" : "admin_add",
+        "template" : "form"
+    },
+
     "aboutus": {
         "file" : "about-us"
     },
-    
+
     "404": {
         "template" : "404"
     }
