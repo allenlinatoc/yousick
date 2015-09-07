@@ -24,4 +24,45 @@
  *
  */
 
-require_once ROOT_PATH . 'includes/load_ad_username.php';
+require_once ROOT_PATH . 'includes/load_ad_usernames.php';
+
+// Check requests
+if (!\Utilities\Requests::HasRequest([ 'username', 'password']))
+{
+    die(ModelResponse::InvalidRequest());
+}
+
+extract($_REQUEST, EXTR_SKIP);
+
+$matches = array();
+// Username sanitation
+preg_match('/[A-Za-z0-9_\.]+/', $username, $matches);
+
+if (sizeof($matches) > 0)
+    $username = $matches[0];
+// end of username sanitation
+
+
+if (!has_account($username))
+{
+    die(new ModelResponse(false, 'User is not registered'));
+}
+
+// Otherwise, proceed with LDAP authentication
+
+$ldapresource = ldap_connect("ldap://svg.openit.local", 389)or die("Unable to connect to ldap://svg.openit.local:389");
+//$result = ldap_bind("svg.openit.local");
+
+ob_start();
+$bind = ldap_bind($ldapresource, sprintf("%s@svg.openit.local", $username), trim($password));
+$buffer = ob_get_clean();
+
+if ($bind == true)
+{
+    // Get user data
+    $user = \Models\User::FindUsername($username);
+
+    die(new ModelResponse(true, 'Authentication success', $user));
+}
+else
+    die(new ModelResponse(false, 'Incorrect password'));
