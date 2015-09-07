@@ -142,6 +142,16 @@ class Model
     {
         $output = json_decode($this->Serialize(), true);
 
+        $keys = array_keys($output);
+
+        foreach ($keys as $key)
+        {
+            if (property_exists($this, $key))
+            {
+                $output[$key] = $this->{$key};
+            }
+        }
+
         if (!is_array($excludeFields))
         {
             $excludeFields = [ 'has_state' ];
@@ -152,7 +162,6 @@ class Model
             $keys = array_keys($output);
             foreach ($keys as $key)
             {
-
                 foreach ($excludeFields as $field)
                 {
                     if (strcasecmp($key, $field) == 0)
@@ -171,16 +180,6 @@ class Model
 
         foreach ($propertyValues as $prop => $value)
         {
-            if ($propMap !== null && $propMap->IsMapped($prop))
-            {
-                $reflection = new ReflectionObject($value);
-                if ($reflection->isSubclassOf('\Model'))
-                {
-                    $propertyValues[$prop] = $value->GetRecordID();
-                    continue;
-                }
-            }
-
             $propertyValues[$prop] = $value;
         }
 
