@@ -72,7 +72,7 @@ class Email
 
                 $mail->Subject = sprintf('New Sick-leave for %s', $userFor->getName());
                 $mail->Body =
-                        sprintf('<b>%s has filed a sick-leave ');
+                        sprintf('<b>%s has filed a sick-leave<b>');
             }
         }
     }

@@ -35,12 +35,7 @@ class String
         foreach ($keys as $key)
         {
             $formattedMeta = '{{' . $key . '}}';
-            $position = strpos($string, $formattedMeta);
-
-            if ($position !== false)
-            {
-                $result = str_replace($formattedMeta, $formattedMeta[$key], $result);
-            }
+            $result = str_replace($formattedMeta, $format_args[$key], $result);
         }
 
         return $result;
