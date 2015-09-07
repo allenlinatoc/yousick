@@ -21,6 +21,10 @@ header('Content-type: application/json');
 
 require_once ROOT_PATH . 'includes/load_ad_usernames.php';
 
+var_dump($_REQUEST);
+var_dump($_POST);
+die();
+
 if (!isset($_REQUEST['username']))
 {
     die(ModelResponse::InvalidRequest());
