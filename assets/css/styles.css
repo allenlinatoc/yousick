@@ -1,25 +1,27 @@
-
-body 
+html.admin-dashboard, body.admin-dashboard, .container.admin-dashboard,
+col-md-9.admin-dashboard, col-md-3.admin-dashboard
 {
-    
+	height: 100%;
+}
+
+body
+{
+
+}
+
+div.col-lg-4 span.input-group span.input-group-btn div
+{
+	display:none;
+
 }
 
 div.header
 {
-    
-}
-
-div.footer
-{
-    background-color: darkkhaki;
-    color: #fff;
-}
-
-.textbox-large
-{
-    font-size: 35px;
+    background-color: #383838;
+    border-bottom: #cd172d solid 2px;
     height: 50px;
 }
+
 
 input[type="submit"].large
 {
@@ -41,4 +43,96 @@ div.col-lg-4 div#spinnerUpload
     position: absolute;
     right: -50px;
     top: 20px;
+}
+
+
+
+div.footer
+{
+    background-color: darkkhaki;
+    color: #fff;
+}
+
+input[type="submit"].large
+{
+    font-size: 30px;
+    height: 50px;
+    background-attachment:#fff;
+}
+
+.col-centered
+{
+    float: none;
+    margin: 0 auto;
+}
+
+.container-full
+{
+    margin: 0 auto;
+    width: 100%;
+}
+
+.logo
+{
+	color: #ffffff;
+	font-size: 1.8em;
+	margin: 10px 0;
+	font-weight: bold;
+}
+
+.no-gutter
+{
+    padding-right: 0;
+}
+
+.textbox-large
+{
+    font-size: 35px;
+    height: 50px;
+}
+
+.reports-nav-items
+{
+    text-align: left;
+}
+
+.span-right
+{
+    float: right;
+}
+
+.vertical-space
+{
+    height: 30px;
+}
+
+#admin-user-btn
+{
+	margin: 9px 15px 9px 9px;
+}
+
+#report-container
+{
+	background-color: #cccccc;
+}
+
+#reports-nav
+{
+	background-color: #383838;
+}
+	
+#reports-nav > .list-group-item
+{
+    border-radius: 0 !important;
+	text-align: left;
+	width: 100%;
+}
+
+#sl-count-wrapper
+{
+    background-color: #cd172d;
+}
+
+#user-header
+{
 }

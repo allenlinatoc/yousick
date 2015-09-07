@@ -13,7 +13,7 @@ $(document).ready(function(){
 						$("#change").html('');
 					console.log(response.data);
 					for (var i=0; i < response.data.length; i++)
-			1		{
+					{
 						var row = response.data[i];
 						$('#change').append(row.employee + ', ' + row.age + ', ' + row.company + '<br>');
 						break;

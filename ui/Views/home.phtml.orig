@@ -1,0 +1,70 @@
+<div class="jumbotron" style="background-color: white; text-align: center; margin: auto 0;">
+    <h1>YouSick</h1>
+    <h4>A simple and lightweight sick-leave notification system</h4>
+</div>
+<div id="change" class="row-fluid">
+    <div align="center">
+        <h2>Enter your username to start</h2>
+        <br>
+        <div class="col-lg-4" style="float:none">
+            <form id="startForm" name="UsernameForm" method="post">
+                <span class="input-group">
+                    <input id="username" type="text" class="form-control textbox-large" name="username" maxlength="15">
+                    <span class="input-group-btn">
+                        <input type="submit" id="START" class="btn btn-danger large" value="Start">
+                    </span>
+					<div id="spinner" class="whirly-loader">
+						Loading…
+					</div>
+                </span>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="remodal-bg">
+  <div id="qunit"></div>
+  <a href="#" data-remodal-target="modal">Call</a>
+</div>
+
+<div class="remodal" data-remodal-id="modal">
+  <a data-remodal-action="close" class="remodal-close"></a>
+
+<<<<<<< HEAD
+  <a data-remodal-action="cancel" class="remodal-cancel" href="#">Cancel</a>
+  <a data-remodal-action="confirm" class="remodal-confirm" href="#">OK</a>
+</div>
+=======
+<script type="text/javascript">
+//    var formSelector = 'form[name="UsernameForm"]';
+//
+//    $(formSelector).submit(function() {
+//        var $data = $(formSelector).serialize();
+//
+//        $('input[type="submit"]').attrib('disabled', 'disabled');
+//
+//        $.ajax({
+//           url: '/?serve-checkusername',
+//           data: $data,
+//           dataType: 'json',
+//           success: function(text)
+//           {
+//               if (text == "success")
+//               {
+//
+//               }
+//           }
+//        });
+//    });
+</script>
+    $(document).ready(function () {
+
+        // Focus on form
+        $('input[name=username]').focus();
+
+
+        $("#START").click(function () {
+            $("#spinner").show();
+        });
+    });
+</script>
+>>>>>>> bcaff763a0d8f2d034541f6a5455358fd6af47e8
