@@ -3,42 +3,42 @@
         "file" : "rest/check_username",
         "template" : "blank"
     },
-    
+
     "rest/check_password": {
         "file" : "rest/check_password",
         "template" : "blank"
     },
-    
+
     "rest/create_sickleave": {
         "file" : "rest/create_sickleave",
         "template" : "blank"
     },
-    
+
     "rest/get_session": {
         "file" : "rest/get_session",
         "template" : "blank"
     },
-    
+
     "rest/logout_session": {
         "file" : "rest/logout_session",
         "template" : "blank"
     },
-    
+
     "rest/is_admin": {
         "file" : "rest/is_admin",
         "template" : "blank"
     },
-    
+
     "rest/view_employees": {
         "file" : "rest/view_employees",
         "template" : "blank"
     },
-    
+
     "rest/view_sickleaves": {
         "file" : "rest/view_sickleaves",
         "template" : "blank"
     },
-    
+
     "rest/counters/sickleave_stats": {
         "file" : "rest/counters/sickleave_stats",
         "template" : "blank"
@@ -52,14 +52,13 @@
         "file" : "rest/reports/yearly",
         "template" : "blank"
     },
-    
-    
-    
+
+
     
     "home": {
         "file" : "home"
     },
-    
+
     "user": {
         "file" : "user",
         "template" : "user_form"
@@ -88,6 +87,7 @@
     "admin/view-sickleave": {
         "file" : "admin/view-sickleave",
         "template" : "admin"
+
     },
 
     "aboutus": {
