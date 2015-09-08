@@ -32,7 +32,7 @@
 		<input name="username" type="hidden">
 		<input name="password" type="password">
 		<input type="submit" value="Submit"-->
-        
+
 	<span class="input-group">
 		<h2 id="passwordHeader">Enter Password</h2>
 		<div id="spinnerPassword" class="whirly-loader">
@@ -41,7 +41,7 @@
 	</span>
         <br>
 	</form>
-		<form id="login" name="AuthenticateForm" method="post">			
+		<form id="login" name="AuthenticateForm" method="post">
 		<input name="username" type="hidden">
 			<span class="input-group">
 				<input id="password" type="password" class="form-control textbox-large" name="password" autofocus>
@@ -73,13 +73,13 @@
 	$(document).ready(function(){
 		var username;
 		var password;
-		
+
 		$("#startForm").submit(function (e) {
-			
+
 			username = $("#username").val();
 			e.preventDefault();
 			$("#spinner").show();
-			
+
 			$.ajax({
 				data: $('#startForm').serialize(),
 				method: "post",
@@ -101,11 +101,11 @@
 						$("#remodal2").trigger("click");
 						console.log(response.data);
 					}
-				},	
+				},
 			});
 		});
 		$("#login").submit(function (e) {
-			
+
 			username = $("#username").val();
 			e.preventDefault();
 			$("#spinnerPassword").hide();
@@ -133,7 +133,7 @@
 						$("#passwordHeader").html('Enter Password (<font color="red"><i>Wrong password</i></font>)');
 						//$("#remodal2").trigger("click");
 					}
-				},	
+				},
 			});
 		});
 	});

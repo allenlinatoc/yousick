@@ -20,11 +20,10 @@
     <div class="col-sm-3">
         <h4 id="reports-header">REPORTS</h4>
         <div id="reports-nav" class="list-group">
-          <button type="button" class="active list-group-item reports-nav-items">Cras justo odio</button>
-          <button type="button" class="list-group-item reports-nav-items">Dapibus ac facilisis in</button>
-          <button type="button" class="list-group-item reports-nav-items">Morbi leo risus</button>
-          <button type="button" class="list-group-item reports-nav-items">Porta ac consectetur ac</button>
-          <button type="button" class="list-group-item reports-nav-items">Vestibulum at eros</button>
+          <button type="button" id="report1-nav-item" class="active list-group-item reports-nav-items">Overall Sick Leave (Monthly)</button>
+          <button type="button" id="report2-nav-item" class="list-group-item reports-nav-items">Overall Sick Leave (Yearly)</button>
+          <button type="button" id="report3-nav-item" class="list-group-item reports-nav-items">All Departments Monthly Sick Leave</button>
+          <button type="button" id="report4-nav-item" class="list-group-item reports-nav-items">Single Department Monthly Sick Leave</button>
         </div>
     </div>
     <div class="col-sm-9">
@@ -34,29 +33,11 @@
 </div>
 
 <script src="assets/3rd/js/user.js" type="text/javascript"></script>
+<script src="assets/3rd/js/reports.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-    $('#chart-container').highcharts({
-        chart: {
-            type: 'bar'
-        },
-        title: {
-            text: 'Fruit Consumption'
-        },
-        xAxis: {
-            categories: ['Apples', 'Bananas', 'Oranges']
-        },
-        yAxis: {
-            title: {
-                text: 'Fruit eaten'
-            }
-        },
-        series: [{
-            name: 'Jane',
-            data: [1, 0, 4]
-        }, {
-            name: 'John',
-            data: [5, 7, 3]
-        }]
+    $('#report1-nav-item').click();
+    $(".reports-nav-items").click(function(){
+        $(this).addClass("active").siblings().removeClass("active");
     });
 </script>

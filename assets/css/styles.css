@@ -101,6 +101,11 @@ input[type="submit"].large
 	border: 0;
 }
 
+.reports-nav-items:focus
+{
+	outline: none;
+}
+
 .reports-nav-items:hover
 {
 	background-color: #cd172d;

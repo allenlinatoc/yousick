@@ -49,9 +49,10 @@
     },
 
 
-    
+
     "home": {
-        "file" : "home"
+        "file" : "home",
+        "template" : "login"
     },
 
     "user": {

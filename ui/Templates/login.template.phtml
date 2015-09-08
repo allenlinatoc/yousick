@@ -43,6 +43,23 @@
         animation: none;
       }
     </style>
+
+    <script type="text/javascript">
+        $.ajax({
+            dataType: 'json',
+            url: '/rest/get_session',
+            success: function(session) {
+                if (session.success)
+                {
+                    if (session.data.user.is_admin)
+                        location.href = "/admin";
+                    else
+                        location.href = "/user";
+                }
+            },
+            async: false
+        });
+    </script>
   </head>
 
   <body>
