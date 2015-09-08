@@ -37,7 +37,7 @@ class SickleaveList extends \ModelCollection
         $pdo = \DB::Instance()->pdo;
         if ($pdo instanceof \PDO)
         {
-            $stmt = $pdo->prepare("SELECT sickleave.* FROM sickleave JOIN user ON sickleave.for_id = user.id AND user.username = :username");
+            $stmt = $pdo->prepare("SELECT sickleave.* FROM sickleave JOIN user ON sickleave.for_id = user.id AND user.username = :username ORDER BY sickleave.date DESC");
 
             $stmt->execute([
                 ':username' => $username

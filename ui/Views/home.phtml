@@ -1,3 +1,9 @@
+
+<?php if (isset($_REQUEST['note'])) : ?>
+<div class="jumbotron" align="center">
+    <font color="darkgray"><b><?= $_REQUEST['note'] ?></b></font>
+</div>
+<?php endif; ?>
 <div class="jumbotron" style="background-color: white; text-align: center; margin: auto 0;">
     <h1>YouSick</h1>
     <h4>A simple and lightweight sick-leave notification system</h4>
@@ -117,6 +123,15 @@
                     if (response.success) {
                         $("#password").val('');
                         $("#close").trigger("click");
+
+                        var after = <?= isset($_REQUEST['after']) ? '"'.urldecode($_REQUEST['after']).'"' : 'null' ?>;
+
+                        if (response.data.is_admin && after != null)
+                        {
+                            window.location.replace(after);
+                            return;
+                        }
+
                         if (response.data.is_admin)
                         {
                             window.location.replace("http://localhost:8888/admin");

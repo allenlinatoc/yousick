@@ -17,9 +17,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 if (!\Utilities\Requests::HasRequest([ 'id' ]))
 {
     header('location: ' . BASE_URL);
     exit();
 }
 
+
+if (!\Utilities\Session::IsLoggedIn())
+    header(sprintf('location: %s?after=%s&note=%s'
+            , BASE_URL
+            , urlencode(rtrim(BASE_URL, '/') . $_SERVER['REQUEST_URI'])
+            , 'Please log in first using an admin account'));
