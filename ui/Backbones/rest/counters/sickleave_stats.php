@@ -15,6 +15,27 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *
+ * [REST_META]
+ *
+ * username (string)
+ *
  */
 
-header('location: ' . BASE_URL . 'admin/home');
+header('Content-type: application/json');
+
+$expectations = [ 'username' ];
+
+if (!\Utilities\Requests::HasRequest($expectations))
+{
+    die(ModelResponse::InvalidRequest());
+}
+
+$username = trim(strtolower($_REQUEST['username']));
+
+
+$sickleaveStat = new \Models\Counters\SickleaveStat($username);
+
+$response = new ModelResponse(true, 'Success', $sickleaveStat);
+die($response);

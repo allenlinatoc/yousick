@@ -1,0 +1,51 @@
+
+<div id="admin-page-body" class="row">
+    <div class="col-sm-3">
+        <h4 id="reports-header">REPORTS</h4>
+        <div id="reports-nav" class="list-group">
+            <button type="button" data-report="report1" class="active list-group-item reports-nav-items">Monthly sick-leave (overall)</button>
+            <button type="button" data-report="report2" class="list-group-item reports-nav-items">Monthly sick-leave by Department</button>
+            <button type="button" data-report="report3" class="list-group-item reports-nav-items">Monthly sick-leave by Individual</button>
+            <button type="button" data-report="report4" class="list-group-item reports-nav-items">Yearly sick-leave (overall)</button>
+            <button type="button" data-report="report5" class="list-group-item reports-nav-items">Yearly sick-leave by Department</button>
+            <button type="button" data-report="report5" class="list-group-item reports-nav-items">Yearly sick-leave by Individual</button>
+        </div>
+    </div>
+    <div class="col-sm-9">
+        <h2>Report Title</h2>
+        <div id="chart-container"></div>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        $('#chart-container').highcharts({
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: 'Monthly sick-leave overall'
+            },
+            xAxis: {
+                categories: [ 'alinatoc', 'rdognidon', 'lromero' ]
+            },
+            yAxis: {
+                title: {
+                    text: 'Fruit eaten'
+                }
+            },
+            series: [{
+                    name: 'Jane',
+                    data: [1, 0, 4]
+                }, {
+                    name: 'John',
+                    data: [5, 7, 3]
+                }]
+        });
+    });
+</script>

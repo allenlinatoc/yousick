@@ -1,0 +1,63 @@
+<script>
+    function Element(el) {
+        return document.getElementById(el);
+    }
+    function uploadfile() {
+        var file = Element("myfile").files[0];
+        //alert(file.name + " | " + file.size + " | " + file.type);
+        var formdata = new FormData();
+        formdata.append("myfile", file);
+        var ajax = new XMLHttpRequest();
+        ajax.upload.addEventListener("progress", progressHandler, false);
+        ajax.addEventListener("load", completeHandler, false);
+        ajax.addEventListener("error", errorHandler, false);
+        ajax.addEventListener("abort", abortHandler, false);
+        ajax.open("POST", "?upload");
+        ajax.send(formdata);
+    }
+    function progressHandler(event) {
+        //Element("totalLoad").innerHTML = "Uploaded" + event.loaded + " bytes of " + event.total;
+        //var percent = (event.loaded / event.total) * 100;
+        //Element("prog").value = Math.round(percent);
+        //Element("status").innerHTML = Math.round(percent) + "% uploaded... please wait";
+    }
+    function completeHandler(event) {
+        //Element("status").innerHTML = event.target.responseText;
+        var out = '<br><b>The following users(s) is/are added:</b> <br><br>';
+        var jsonArr = JSON.parse(event.target.responseText)
+        console.log(jsonArr);
+        for (var i = 0; i < jsonArr.data.collection.length; i++)
+        {
+            var row = jsonArr.data.collection[i];
+            out += row.name + '<br>';
+        }
+        Element("status").innerHTML = out;
+    }
+    function errorHandler(event) {
+        Element("status").innerHTML = "Upload Failed";
+    }
+    function abortHandler(event) {
+        Element("status").innerHTML = "Upload Aborted";
+    }
+</script>
+<div class="jumbotron" style="background-color: white; text-align: center; margin: auto 0;">
+    <a href="<?= BASE_URL ?>"><h1>YouSick</h1></a>
+    <h4>A simple and lightweight sick-leave notification system</h4>
+</div>
+<div id="change" class="row-fluid">
+    <div align="center">
+        <h2>Upload CSV file</h2>
+        <br>
+        <div class="col-lg-4" style="float:none">
+            <form id="myForm" name="myForm" enctype="multipart/form-data" method="post">
+                <input type="file" id="myfile" name="myfile" class="filestyle" data-buttonName="btn btn-danger large"><br>
+                <input type="button" value="upload" onclick="uploadfile()" class="btn btn-danger large">
+                <div id="spinnerUpload" class="whirly-loader">
+                    Loading…
+                </div><br>
+                <p id="status"></p>
+                <p id="totalLoaded"></p>
+            </form>
+        </div>
+    </div>
+</div>

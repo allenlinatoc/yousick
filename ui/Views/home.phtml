@@ -13,54 +13,54 @@
                     <span class="input-group-btn">
                         <input type="submit" id="START" class="btn btn-danger large" value="Start">
                     </span>
-					<div id="spinner" class="whirly-loader">
-						Loading…
-					</div>
+                    <div id="spinner" class="whirly-loader">
+                        Loading…
+                    </div>
                 </span>
             </form>
         </div>
     </div>
 </div>
 <div class="remodal-bg">
-  <div id="qunit"></div>
-  <a href="#" id="remodal" data-remodal-target="modal" style="display:none;"></a>
+    <div id="qunit"></div>
+    <a href="#" id="remodal" data-remodal-target="modal" style="display:none;"></a>
 </div>
 
 <div class="remodal" data-remodal-id="modal">
-  <a id="close" data-remodal-action="close" class="remodal-close"></a>
-	<!--form name='AuthenticateForm'>
-		<input name="username" type="hidden">
-		<input name="password" type="password">
-		<input type="submit" value="Submit"-->
+    <a id="close" data-remodal-action="close" class="remodal-close"></a>
+    <!--form name='AuthenticateForm'>
+            <input name="username" type="hidden">
+            <input name="password" type="password">
+            <input type="submit" value="Submit"-->
 
-	<span class="input-group">
-		<h2 id="passwordHeader">Enter Password</h2>
-		<div id="spinnerPassword" class="whirly-loader">
-			Loading…
-		</div>
-	</span>
-        <br>
-	</form>
-		<form id="login" name="AuthenticateForm" method="post">
-		<input name="username" type="hidden">
-			<span class="input-group">
-				<input id="password" type="password" class="form-control textbox-large" name="password" autofocus>
-				<span class="input-group-btn">
-					<input type="submit" id="enterPass" class="btn btn-danger large" value="Submit">
-				</span>
-			</span>
-		</form>
-  <!--a data-remodal-action="cancel" class="remodal-cancel" href="#">Cancel</a>
-  <a data-remodal-action="confirm" class="remodal-confirm" href="#">OK</a-->
+    <span class="input-group">
+        <h2 id="passwordHeader">Enter Password</h2>
+        <div id="spinnerPassword" class="whirly-loader">
+            Loading…
+        </div>
+    </span>
+    <br>
+    </form>
+    <form id="login" name="AuthenticateForm" method="post">
+        <input name="username" type="hidden">
+        <span class="input-group">
+            <input id="password" type="password" class="form-control textbox-large" name="password" autofocus>
+            <span class="input-group-btn">
+                <input type="submit" id="enterPass" class="btn btn-danger large" value="Submit">
+            </span>
+        </span>
+    </form>
+    <!--a data-remodal-action="cancel" class="remodal-cancel" href="#">Cancel</a>
+    <a data-remodal-action="confirm" class="remodal-confirm" href="#">OK</a-->
 </div>
 <div class="remodal-bg">
-  <div id="qunit"></div>
-  <a href="#" id="remodal2" data-remodal-target="modal2" style="display:none;">Call</a>
+    <div id="qunit"></div>
+    <a href="#" id="remodal2" data-remodal-target="modal2" style="display:none;">Call</a>
 </div>
 
 <div class="remodal" data-remodal-id="modal2">
-  <a data-remodal-action="close" class="remodal-close"></a>
-        <h2 id="usernameFail">WRONG USERNAME INPUT!</h2>
+    <a data-remodal-action="close" class="remodal-close"></a>
+    <h2>WRONG USERNAME INPUT!</h2>
 </div>
 </script>
 
@@ -69,72 +69,70 @@
 
 
 <script type="text/javascript">
+    $(document).ready(function () {
+        var username;
+        var password;
 
-	$(document).ready(function(){
-		var username;
-		var password;
+        $("#startForm").submit(function (e) {
 
-		$("#startForm").submit(function (e) {
+            username = $("#username").val();
+            e.preventDefault();
+            $("#spinner").show();
 
-			username = $("#username").val();
-			e.preventDefault();
-			$("#spinner").show();
+            $.ajax({
+                data: $('#startForm').serialize(),
+                method: "post",
+                url: "<?= BASE_URL ?>rest/check_username",
+                contenttype: 'json',
+                success: function (response) {
+                    if (response.success) {
+                        $("#spinner").hide();
+                        $("#username").val('');
+                        console.log(response.data);
+                        $('form[name=AuthenticateForm] input[name=username]').attr('value', username);
+                        $("#remodal").trigger("click");
+                        document.getElementById("password").focus();
+                    } else {
+                        $("#spinner").hide();
+                        $("#username").val('');
+                        $("#remodal2").trigger("click");
+                        console.log(response.data);
+                    }
+                },
+            });
+        });
+        $("#login").submit(function (e) {
 
-			$.ajax({
-				data: $('#startForm').serialize(),
-				method: "post",
-				url: "<?= BASE_URL ?>rest/check_username",
-				contenttype: 'json',
-				success: function (response) {
-					if(response.success){
-						$("#spinner").hide();
-						$("#username").val('');
-						console.log(response.data);
-						$('form[name=AuthenticateForm] input[name=username]').attr('value', username);
-						$("#remodal").trigger("click");
-						document.getElementById("password").focus();
-					}
-					else{
-						$("#spinner").hide();
-						$("#username").val('');
-						$("#usernameFail").text(response.message);
-						$("#remodal2").trigger("click");
-						console.log(response.data);
-					}
-				},
-			});
-		});
-		$("#login").submit(function (e) {
-
-			username = $("#username").val();
-			e.preventDefault();
-			$("#spinnerPassword").hide();
-			$.ajax({
-				data: $('#login').serialize(),
-				method: "post",
-				url: "<?= BASE_URL ?>rest/check_password",
-				success: function (response) {
-					console.log(response);
-					if(response.success){
-						$("#password").val('');
-						$("#close").trigger("click");
-						if(response.data.is_admin)
-						{
-							window.location.replace("http://localhost:8888/admin");
-						}
-						else
-						{
-							window.location.replace("http://localhost:8888/user");
-						}
-						//window.location.replace("http://localhost:8888/admin");
-					}
-					else{
-						$("#password").val('');
-						$("#passwordHeader").html('Enter Password (<font color="red"><i>Wrong password</i></font>)');
-						//$("#remodal2").trigger("click");
-					}
-				},
-			});
-		});
-	});
+            username = $("#username").val();
+            e.preventDefault();
+            $("#spinnerPassword").hide();
+            $('input[type=password]').attr('readonly', 'readonly');
+            $.ajax({
+                data: $('#login').serialize(),
+                method: "post",
+                url: "<?= BASE_URL ?>rest/check_password",
+                success: function (response) {
+                    console.log(response);
+                    $('input[type=password]').removeAttr('readonly');
+                    if (response.success) {
+                        $("#password").val('');
+                        $("#close").trigger("click");
+                        if (response.data.is_admin)
+                        {
+                            window.location.replace("http://localhost:8888/admin");
+                        }
+                        else
+                        {
+                            window.location.replace("http://localhost:8888/user");
+                        }
+                        //window.location.replace("http://localhost:8888/admin");
+                    } else {
+                        $("#password").val('');
+                        $("#passwordHeader").html('Enter Password (<font color="red"><i>Wrong password</i></font>)');
+                        //$("#remodal2").trigger("click");
+                    }
+                },
+            });
+        });
+    });
 </script>
