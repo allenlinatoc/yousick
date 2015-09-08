@@ -20,7 +20,7 @@
             <h2 id="name">Loading...</h2>
             <label><strong>0/15</strong> Sick Leave Filed</label>
             <span class="pull-right">
-                <a href="">See history</a>
+                <a href="http://localhost:8888/see-history">See history</a>
             </span>
         </div>
     </div>
@@ -75,7 +75,10 @@
         url: '/rest/get_session',
         success: function(session) {
             if (session.success)
-                $('#name').html(session.data.user.name);
+			{
+                $('#name').html(session.data.user.name + "  <span class='caret'></span>");
+                $('#user-btn').html(session.data.user.username + "  <span class='caret'></span>")
+			}
         }
     });
 
@@ -110,4 +113,21 @@
             }
         });
     });
+	// Bind Logout
+		$('#logout').click(function(e) {
+			e.preventDefault();
+
+			$.ajax({
+				url: '<?= BASE_URL ?>rest/logout_session',
+				contentType: 'json',
+				method: 'POST',
+				success: function(response) {
+					if (response.success)
+					{
+						window.location = '<?= BASE_URL ?>';
+					}
+				}
+			});
+		});
 </script>
+            
