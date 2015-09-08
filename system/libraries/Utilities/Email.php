@@ -101,7 +101,7 @@ class Email
                                 'date' => $sickleave->getDate(),
                                 'span' => $sickleave->getSpan(),
                                 'reason' => $sickleave->getReason(),
-                                'url' => BASE_URL . 'sickleave?id=' . $sickleave->GetRecordID()
+                                'url' => BASE_URL . 'admin/view-sickleave?id=' . $sickleave->GetRecordID()
                             ]);
 
                 // Send mail
@@ -162,7 +162,7 @@ class Email
                                 'date' => $sickleave->getDate(),
                                 'span' => $sickleave->getSpan(),
                                 'reason' => $sickleave->getReason(),
-                                'url' => BASE_URL . 'sickleave?id=' . $sickleave->GetRecordID()
+                                'url' => BASE_URL . 'user/view-sickleave?id=' . $sickleave->GetRecordID()
                             ]);
 
             $mail->send();

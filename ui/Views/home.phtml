@@ -126,7 +126,7 @@
 
                         var after = <?= isset($_REQUEST['after']) ? '"'.urldecode($_REQUEST['after']).'"' : 'null' ?>;
 
-                        if (response.data.is_admin && after != null)
+                        if (after != null)
                         {
                             window.location.replace(after);
                             return;

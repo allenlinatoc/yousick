@@ -25,8 +25,8 @@ if (!\Utilities\Requests::HasRequest([ 'id' ]))
 }
 
 
-//if (!\Utilities\Session::IsLoggedIn())
-//    header(sprintf('location: %s?after=%s&note=%s'
-//            , BASE_URL
-//            , urlencode(rtrim(BASE_URL, '/') . $_SERVER['REQUEST_URI'])
-//            , 'Please log in first using an admin account'));
+if (!\Utilities\Session::IsLoggedIn())
+    header(sprintf('location: %s?after=%s&note=%s'
+            , BASE_URL
+            , urlencode(rtrim(BASE_URL, '/') . $_SERVER['REQUEST_URI'])
+            , 'Please log in first using your account'));
