@@ -60,6 +60,10 @@
         "file" : "admin_add",
         "template" : "admin_form"
     },
+	
+	"view-sickleave": {
+		"file" : "view-sickleave"
+	},
 
     "aboutus": {
         "file" : "about-us"

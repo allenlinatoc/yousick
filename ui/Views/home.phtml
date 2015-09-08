@@ -60,7 +60,7 @@
 
 <div class="remodal" data-remodal-id="modal2">
   <a data-remodal-action="close" class="remodal-close"></a>
-        <h2>WRONG USERNAME INPUT!</h2>
+        <h2 id="usernameFail">WRONG USERNAME INPUT!</h2>
 </div>
 </script>
 
@@ -97,6 +97,7 @@
 					else{
 						$("#spinner").hide();
 						$("#username").val('');
+						$("#usernameFail").text(response.message);
 						$("#remodal2").trigger("click");
 						console.log(response.data);
 					}
