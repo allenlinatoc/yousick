@@ -1,0 +1,92 @@
+<div class="row header">
+    <div class="col-xs-6">
+        <a href="<?= BASE_URL ?>/user"><h1 class="logo col-xs-6">YouSick</h1></a>
+    </div>
+    <span class="col-xs-6">
+        <div class="btn-group pull-right">
+            <button  type="button" id="user-btn" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            </button>
+            <ul class="dropdown-menu pull-right">
+                <li><a href="/user">File Sick Leave</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="" id="logout">Logout</a></li>
+            </ul>
+        </div>
+    </span>
+</div>
+<div class="col-md-9 col-sm-9 col-xs-9 col-centered">
+    <div id="user-header" class="row">
+        <div id="name-wrapper">
+            <h2 id="name">Loading..</h2>
+            <label><strong>0/15</strong> Sick Leave Filed</label><br><br><br>
+        </div>
+        <table id="infos" style="width:100%;">
+            <tr>
+                <td><font size="6"><b>Sick Leave Filed </b></font></td>
+                <td><font size="6"><b>Target date</b></font></td>
+                <td><font size="6"><b>Reason</b></font></td>
+            </tr>
+            <tr>
+                <td colspan="3"><hr></td>
+            </tr>
+        </table>
+    </div>
+    <div class="vertical-space"></div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var author_id;
+        var state;
+        $.ajax({
+            dataType: 'json',
+            url: '/rest/get_session',
+            success: function (session) {
+                if (session.success)
+                {
+                    author_id = session.data.user.ID;
+                    var htmlText = session.data.user.name + "  <span class='caret'></span>"
+                    $('#name').html(htmlText)
+                    $('#user-btn').html(session.data.user.username + "  <span class='caret'></span>")
+                }
+            }
+        });
+        $.ajax({
+            url: '/rest/view_sickleaves',
+            method: 'post',
+            data: {
+                'username' : '<?= \Utilities\Session::Initialize()->getUser()->getUsername() ?>'
+            },
+            success: function (sickleaves) {
+                if (sickleaves.success)
+                {
+                    for (var i = 0; i < sickleaves.data.collection.length; i++)
+                    {
+                        var row = sickleaves.data.collection[i];
+                        if (author_id == row.for_id.ID)
+                        {
+                            $('#infos').append('<tr><td><a href="http://localhost:8888/user/view-sickleave?id=' + row.ID + '"><font size="4px">' + row.created_on + '</font></a></td>'
+                                    + '<td><font size="4px">' + row.date + '</font></td>'
+                                    + '<td><font size="4px">'+ row.reason + '</font></td></tr>');
+                        }
+                    }
+                }
+            }
+        });
+    });
+    // Bind Logout
+    $('#logout').click(function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: '<?= BASE_URL ?>rest/logout_session',
+            contentType: 'json',
+            method: 'POST',
+            success: function (response) {
+                if (response.success)
+                {
+                    window.location = '<?= BASE_URL ?>';
+                }
+            }
+        });
+    });
+</script>

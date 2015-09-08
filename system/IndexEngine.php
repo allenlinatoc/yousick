@@ -46,7 +46,7 @@ class IndexEngine {
             $matches = array();
             preg_match('/^[^&\?][A-Za-z0-9\%-_][^&\?]+/', $uri, $matches);
 
-            $request = $matches[0];
+            $request = isset($matches[0]) ? $matches[0] : '';
 
             if (strlen(trim($request)) > 0)
                 $page = $request;

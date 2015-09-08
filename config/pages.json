@@ -75,8 +75,8 @@
         "template" : "user_form"
     },
 	
-	"see-history": {
-		"file" : "see-history",
+	"user/history": {
+		"file" : "user/history",
 		"template" : "user_form"
 	},
 	

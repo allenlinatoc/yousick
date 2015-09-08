@@ -20,7 +20,7 @@
             <h2 id="name">Loading...</h2>
             <label><strong>0/15</strong> Sick Leave Filed</label>
             <span class="pull-right">
-                <a href="http://localhost:8888/see-history">See history</a>
+                <a href="<?= BASE_URL ?>user/history">See history</a>
             </span>
         </div>
     </div>
@@ -88,6 +88,9 @@
     });
 
     $("#fileSickLeave").submit(function (e) {
+        e.preventDefault();
+
+
         var jsDate = new Date($('#date').val());
         var date = moment(jsDate).format('YYYY-MM-DD');
         $('#date').val(date);
@@ -103,6 +106,7 @@
                 if(retData.success)
                 {
                     alert("Success: " + retData.message);
+                    window.location.replace('<?= BASE_URL ?>user/history')
                 }
                 else {
                     if (retData.has_state && !retData.data.state.success)
@@ -130,4 +134,4 @@
 			});
 		});
 </script>
-            
+
