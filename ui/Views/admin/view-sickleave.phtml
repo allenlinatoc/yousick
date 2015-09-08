@@ -4,6 +4,10 @@
             <h2>Sick-leave filed for <span id="for_name"></span></h2>
             Created by <span id="author_name"></span>
         </div>
+        <div class="col-sm-6 section-read-progress">
+            <br>
+            <?php require_once ROOT_PATH . 'includes/loaders/spinner.php'; ?>
+        </div>
         <div class="col-sm-6 section-read" style="display: none">
             <h3>Read by <span id="read_by"></span></h3>
             <span id="read_on"></span>
@@ -70,6 +74,7 @@
                                 // Make section-read visible
                                 $('#read_by').text(response.data.read_by.name);
                                 $('#read_on').text(jQuery.timeago(response.data.read_on));
+                                $('.section-read-progress').hide();
                                 $('.section-read').show();
                             }
                         }
@@ -80,6 +85,7 @@
                     // Make section-read visible
                     $('#read_by').text(sickleave.read_by.name);
                     $('#read_on').text(jQuery.timeago(sickleave.read_on));
+                    $('.section-read-progress').hide();
                     $('.section-read').show();
                 }
 

@@ -30,7 +30,7 @@ function get_admins()
     {
         $username = $users[$key];
 
-        if ($username{strlen($username) - 1} == '*')
+        if (strlen($username) - 1 > 0 && $username{strlen($username) - 1} == '*')
         {
             array_push($admins, trim($username, '*'));
         }

@@ -1,0 +1,60 @@
+
+<div class="container">
+
+    <h2 id="fullname">(loading...)</h2>
+    <h3>Sick-leave history</h3>
+
+    <hr>
+    <table class="history" width="100%">
+        <tr>
+            <td><h3>Reason</h3></td>
+            <td><h3>Date</h3></td>
+            <td><h3>Date filed</h3></td>
+        </tr>
+        <tr>
+            <td colspan="3"><hr></td>
+        </tr>
+        <tr id="initial_row">
+            <td colspan="3" align="center">
+                <?php require_once ROOT_PATH . '/includes/loaders/spinner.php' ?></td>
+        </tr>
+    </table>
+
+</div>
+
+
+<script type="text/javascript">
+
+    $.ajax({
+        url: '<?= BASE_URL ?>rest/view_sickleaves',
+        data: {
+            'username': '<?= $username ?>'
+        },
+        method: 'post',
+        success: function(json) {
+            if (json.success)
+            {
+                $('#initial_row').hide();
+                var data = json.data;
+                for (var $i=0; $i < data.length; $i++)
+                {
+                    var $row = data[$i];
+
+                    console.log($row.reason);
+                    $('.history').append(
+                            '<tr>\n\
+                            <td>' + $row.reason + '</td>\n\
+                            <td>' + $row.date + '</td>\n\
+                            <td>' + $row.created_on + '</td>\n\
+                            </tr>'
+                            );
+                }
+            }
+            else
+            {
+
+            }
+        }
+    });
+
+</script>

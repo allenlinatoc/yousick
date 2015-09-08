@@ -104,6 +104,11 @@
         "file" : "admin/new-sickleave",
         "template" : "admin_form"
     },
+    
+    "admin/view-history": {
+        "file" : "admin/view-history",
+        "template" : "admin"
+    },
 
     "admin/view-sickleave": {
         "file" : "admin/view-sickleave",

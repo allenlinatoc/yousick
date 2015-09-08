@@ -137,7 +137,8 @@
     $('#sl-form').submit(function (e) {
         e.preventDefault();
 
-        $('#sl-form input[type=submit]').attr('disabled', 'disabled');
+        var $oldCaption = $('#sl-form input[type=submit]').attr('disabled', 'disabled').val();
+        $('#sl-form input[type=submit]').val('Please wait');
 
         var jsDate = new Date($('#date').val());
         var date = moment(jsDate).format('YYYY-MM-DD');
@@ -162,7 +163,11 @@
                         alert("Failed: " + retData.message);
                 }
 
-                $('#sl-form input[type=submit]').removeAttr('disabled');
+                $('#sl-form input[type=submit]').val($oldCaption).removeAttr('disabled');
+            },
+            error: function () {
+                $('#sl-form input[type=submit]').val($oldCaption).removeAttr('disabled');
+                alert('A network error occured, please try again later');
             }
         });
     });
