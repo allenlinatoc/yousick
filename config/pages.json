@@ -64,15 +64,26 @@
     },
 
 
-    
+
     "home": {
-        "file" : "home"
+        "file" : "home",
+        "template" : "login"
     },
 
     "user": {
         "file" : "user",
         "template" : "user_form"
     },
+	
+	"see-history": {
+		"file" : "see-history",
+		"template" : "user_form"
+	},
+	
+	"view-sickleave" : {
+		"file" : "view-sickleave",
+		"template" : "user_form"
+	},
 
     "admin": {
         "file" : "admin",
