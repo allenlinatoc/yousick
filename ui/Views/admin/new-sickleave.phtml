@@ -136,6 +136,9 @@
 
     $('#sl-form').submit(function (e) {
         e.preventDefault();
+
+        $('#sl-form input[type=submit]').attr('disabled', 'disabled');
+
         var jsDate = new Date($('#date').val());
         var date = moment(jsDate).format('YYYY-MM-DD');
         $('#date').val(date);
@@ -158,6 +161,8 @@
                     else
                         alert("Failed: " + retData.message);
                 }
+
+                $('#sl-form input[type=submit]').removeAttr('disabled');
             }
         });
     });

@@ -49,7 +49,7 @@ class SickleaveStat extends \Model
                     . "FROM MonthlyIndividual "
                     . "WHERE username = :username AND `year` = year(localtime());");
 
-            $stmt->bindParam(':username', $username_or_id);
+            $stmt->bindParam(':username', $this->username);
             $stmt->execute();
             $rows = $stmt->fetchAll();
 
