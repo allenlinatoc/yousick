@@ -4,9 +4,8 @@
     </div>
     <span class="col-xs-6">
         <div class="btn-group pull-right">
-            <button  type="button" id="admin-user-btn" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                aduser <span class="caret"></span>
-            </button>
+            <button  type="button" id="user-btn" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Loading</button>
             <ul class="dropdown-menu pull-right">
                 <li><a href="#">File Sick Leave</a></li>
                 <li role="separator" class="divider"></li>
@@ -81,71 +80,69 @@
     </form>
 </div>
 
-<script src="assets/3rd/js/admin.js" type="text/javascript">
-</script>
+<script src="assets/3rd/js/user.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-    $(function () {
-        $('#datetimepicker').datetimepicker({
-            format: 'LL',
-            defaultDate: new Date(),
-            extraFormats: ['YYYY-MM-DD']
-        });
+    $('#datetimepicker').datetimepicker({
+        format: 'LL',
+        defaultDate: new Date(),
+        extraFormats: ['YYYY-MM-DD']
+    });
 
-        var selectize = $('#employee-name-field').selectize({
-            create: true,
-            sortField: {
-                field: 'text',
-                direction: 'asc'
-            },
-            onItemAdd: function(value, $item) {
-                console.log(value);
+    var selectize = $('#employee-name-field').selectize({
+        create: true,
+        sortField: {
+            field: 'text',
+            direction: 'asc'
+        },
+        onItemAdd: function(value, $item) {
+            console.log(value);
+        }
+    });
+
+    var selectizeControl = selectize[0].selectize;
+
+    $.ajax({
+        dataType: 'json',
+        url: '/rest/view_employees',
+        success: function(employees) {
+            if (employees.success)
+            {
+                $.each(employees.data.collection, function(index, employee) {
+                    selectizeControl.addOption({
+                        value: employee.ID,
+                        text: employee.name
+                    });
+                });
             }
-        });
+        }
+    });
 
-        var selectizeControl = selectize[0].selectize;
+    $('#file-sl-btn').click(function(e) {
+        e.preventDefault();
+        var jsDate = new Date($('#date').val());
+        var date = moment(jsDate).format('YYYY-MM-DD');
+        $('#date').val(date);
+
+        var data = $('#sl-form').serialize()+"&author_id="+user_id;
+        console.log(data);
 
         $.ajax({
-            dataType: 'json',
-            url: '/rest/view_employees',
-            success: function(employees) {
-                if (employees.success)
+            method: 'POST',
+            url: '/rest/create_sickleave',
+            data: data,
+            success: function(retData) {
+                if(retData.success)
                 {
-                    $.each(employees.data.collection, function(index, employee) {
-                        selectizeControl.addOption({
-                            value: employee.ID,
-                            text: employee.name
-                        });
-                    });
+                    alert("Success: " + retData.message);
+                }
+                else {
+                    if (retData.has_state && !retData.data.state.success)
+                        alert("Failed: " + retData.data.state.message);
+                    else
+                        alert("Failed: " + retData.message);
                 }
             }
-        });
-
-        $('#file-sl-btn').click(function(e) {
-            var jsDate = new Date($('#date').val());
-            var date = moment(jsDate).format('YYYY-MM-DD');
-            $('#date').val(date);
-
-            var data = $('#sl-form').serialize()+"&author_id="+admin_id;
-            console.log(data);
-
-            $.ajax({
-                method: 'POST',
-                url: '/rest/create_sickleave',
-                data: data,
-                success: function(retData) {
-                    if(retData.success)
-                    {
-                        alert("Success: " + retData.message);
-                    }
-                    else {
-                        if (retData.has_state && !retData.data.state.success)
-                            alert("Failed: " + retData.data.state.message);
-                        else
-                            alert("Failed: " + retData.message);
-                    }
-                }
-            });
         });
     });
 </script>

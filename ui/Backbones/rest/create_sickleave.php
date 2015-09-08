@@ -57,4 +57,11 @@ if (!$newSickleave->SaveAll())
 
 // Otherwise, success
 
+// Notify via email
+$isNotificationEnabled = Utilities\Config::get('email_notification', CONFIG_PATH . 'application.ini');
+if ($isNotificationEnabled == 1)
+{
+    Utilities\Email::NotifyAdmins($newSickleave);
+}
+
 die(new ModelResponse(true, "Sick leave entry has been successfully added!", $newSickleave));

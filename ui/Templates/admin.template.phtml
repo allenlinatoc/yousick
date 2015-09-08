@@ -26,8 +26,10 @@
             url: '/rest/get_session',
             success: function(session) {
                 if (!session.success)
-                {
                     location.href = '/home';
+                else {
+                    if (!session.data.user.is_admin)
+                        location.href = "/user";
                 }
             },
             async: false
