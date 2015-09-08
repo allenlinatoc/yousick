@@ -54,7 +54,7 @@ class SickleaveList extends \ModelCollection
                 $result->add($sickleave);
             }
 
-            return $sickleave;
+            return $result;
         }
 
         return false;

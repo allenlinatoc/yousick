@@ -62,19 +62,54 @@ class Email
 
         foreach ($admins as $admin)
         {
-            $user = \Models\User::FindUsername($admin);
-            if ($user instanceof \Models\User)
+            $adminUser = \Models\User::FindUsername($admin);
+            if ($adminUser instanceof \Models\User)
             {
-                $emailAddress = $user->getEmail();
+                $emailAddress = $adminUser->getEmail();
+
+                $mail->clearAllRecipients();
 
                 // Send email to this person
-                $mail->addAddress($emailAddress, $user->getName());
+                $mail->addAddress($emailAddress, $adminUser->getName());
 
                 $mail->Subject = sprintf('New Sick-leave for %s', $userFor->getName());
                 $mail->Body =
-                        sprintf('<b>%s has filed a sick-leave<b>');
+                    String::Format(
+                            '<font face="arial" size="8px">'
+                            . 'Hello {{admin_name}},<br>'
+                            . '<br>'
+                            . '<br>'
+                            . '<h2>A sick-leave has been filed for {{for_name}}</h2>'
+                            . '<br>'
+                            . '<b>For: </b>{{for_name}}<br>'
+                            . '<b>Author: </b>{{author_name}}<br>'
+                            . '<b>Target date: </b>{{date}}<br>'
+                            . '<b>Span: </b>{{span}} day/s<br>'
+                            . '<br>'
+                            . '<h2>Reason</h2>'
+                            . '<h3><i>"{{reason}}"</i></h3><br>'
+                            . 'To read this sick-leave, click the URL below: <br>'
+                            . '<a href="">{{url}}</a><br>'
+                            . '<br>'
+                            . 'Thank you!<br>'
+                            . '<i>OpeniT YouSick system</i>'
+                            . '</font>',
+                            [
+                                'admin_name' => $adminUser->getName(),
+                                'for_name' => $userFor->getName(),
+                                'author_name' => $userAuthor->getName(),
+                                'date' => $sickleave->getDate(),
+                                'span' => $sickleave->getSpan(),
+                                'reason' => $sickleave->getReason(),
+                                'url' => BASE_URL . 'sickleave?id=' . $sickleave->GetRecordID()
+                            ]);
+
+                // Send mail
+
+                $mail->send();
             }
         }
     }
 
 }
+?>

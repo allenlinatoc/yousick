@@ -17,19 +17,39 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Utilities;
+namespace Models\Reports;
 
 /**
- * Description of System
+ * Description of MonthlyOverall
  *
  * @author alinatoc
  */
-class System
+class MonthlyOverall extends \Model
 {
 
-    static public function GetBaseURL()
+    public
+            $month,
+            $year,
+            $count;
+
+    public function __construct()
     {
-        return rtrim(Config::get('base_url', APPLICATION_INI), '/') . '/';
+        parent::__construct('Reports\MonthlyOverall');
     }
+
+    /**
+     * @property month
+     */
+    public function getMonth() { return intval($this->month); }
+
+    /**
+     * @property year
+     */
+    public function getYear() { return intval($this->year); }
+
+    /**
+     * @property count
+     */
+    public function getCount() { return $this->count; }
 
 }

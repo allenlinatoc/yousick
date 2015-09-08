@@ -39,7 +39,17 @@
         "template" : "blank"
     },
 
+    "rest/reports/monthly": {
+        "file" : "rest/reports/monthly",
+        "template" : "blank"
+    },
+    "rest/reports/yearly": {
+        "file" : "rest/reports/yearly",
+        "template" : "blank"
+    },
 
+
+    
     "home": {
         "file" : "home"
     },
@@ -58,6 +68,10 @@
         "file" : "admin_add",
         "template" : "admin_form"
     },
+
+	"view-sickleave": {
+		"file" : "view-sickleave"
+	},
 
     "aboutus": {
         "file" : "about-us"

@@ -17,19 +17,39 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Utilities;
+namespace Models\Reports;
 
 /**
- * Description of System
+ * Description of YearlyIndividual
  *
  * @author alinatoc
  */
-class System
+class YearlyDepartment extends \Model
 {
 
-    static public function GetBaseURL()
+    public
+            $department,
+            $year,
+            $count;
+
+    public function __construct()
     {
-        return rtrim(Config::get('base_url', APPLICATION_INI), '/') . '/';
+        parent::__construct('Reports\YearlyDepartment');
     }
+
+    /**
+     * @property department
+     */
+    public function getDepartment() { return $this->department; }
+
+    /**
+     * @property year
+     */
+    public function getYear() { return intval($this->year); }
+
+    /**
+     * @property count
+     */
+    public function getCount() { return $this->count; }
 
 }

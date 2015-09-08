@@ -41,9 +41,14 @@ abstract class ModelCollection
 
         if ($fetch)
         {
+            $matches = [];
+            preg_match('/[A-Za-z0-9_]+$/', $this->modelName, $matches);
+
+            $tableName = $matches[0];
+
             // Query and fetch
             $db = \DB::Instance();
-            $data = $db->select($this->modelName, '*');
+            $data = $db->select($tableName, '*');
 
             foreach ($data as $row)
             {

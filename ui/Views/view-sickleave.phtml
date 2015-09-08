@@ -1,0 +1,67 @@
+<!--h1 id="sample">id = <?php echo $_GET["id"]; ?></h1-->
+
+<div class="jumbotron">
+    <h1>YouSick</h1>
+    <h4>A simple and lightweight sick-leave notification system</h4>
+</div>
+<div class="col-md-4 col-sm-6 col-xs-9 col-centered">
+    <div id="user-header" class="row">
+        <div id="name-wrapper">
+            <h2 id="name">Loading..</h2>
+        </div>
+		<p id="infos"></p>
+    </div>
+    <div class="vertical-space"></div>
+</div>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		var author_id;
+		var state;
+		$.ajax({
+            dataType: 'json',
+            url: '/rest/get_session',
+            success: function(session) {
+                if (session.success)
+                {
+                    author_id = session.data.user.ID;
+                    var htmlText = session.data.user.username + "  <span class='caret'></span>"
+                    //$('#admin-user-btn').html(htmlText)
+                }
+            }
+        });
+		$.ajax({
+			dataType: 'json',
+			url: '/rest/view_sickleaves',
+			success: function(sickleaves) {
+				if (sickleaves.success)
+				{
+					for(var i = 0; i < sickleaves.data.collection.length; i++)
+					{
+						var row = sickleaves.data.collection[i];
+						console.log(row.ID);
+						if(row.ID==<?= $_GET["id"]; ?>)
+						{
+							$('#name').text(row.for_id.name);
+							if(row.author_id.name != row.for_id.name)
+							{
+								$('#infos').append("Sick Leave ID: " + row.ID + "<br>From: " + row.for_id.department + "<br>Reason: " + row.reason + "<br><br>Filed On: " + row.author_id.created_on + "<br>Filed by: " + row.author_id.name + "<br>From: " + row.author_id.department );
+							}
+							else
+							{
+								$('#infos').append("Sick Leave ID: " + row.ID + "<br>From: " + row.for_id.department + "<br>Reason: " + row.reason + "<br>Filed On: " + row.author_id.created_on );
+							}
+							break;
+						}
+						else
+						{
+							$('#name').text("No Record");
+						}
+						//$('#name').append(row.name + "<br>");
+					}
+				}
+			}
+		});
+	});
+</script>

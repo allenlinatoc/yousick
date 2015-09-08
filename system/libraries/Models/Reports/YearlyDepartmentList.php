@@ -17,19 +17,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Utilities;
+namespace Models\Reports;
 
 /**
- * Description of System
+ * Description of YearlyDepartmentList
  *
  * @author alinatoc
  */
-class System
+class YearlyDepartmentList extends \ModelCollection
 {
 
-    static public function GetBaseURL()
+    public function __construct($fetch = true)
     {
-        return rtrim(Config::get('base_url', APPLICATION_INI), '/') . '/';
+        parent::__construct('Reports\YearlyDepartment', $fetch);
     }
 
 }
