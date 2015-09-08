@@ -32,10 +32,14 @@ class SickleaveStat extends \Model
             $username;
 
 
-    public function __construct($username)
+    public function __construct($username_or_id)
     {
         parent::__construct('Counters\SickleaveStat');
-        $this->username = $username;
+
+        if (is_int($username_or_id))
+            $this->username = \Models\User::Find($username_or_id, 'user')->getUsername();
+        else
+            $this->username = $username_or_id;
 
         // Count
         $pdo = \DB::Instance()->pdo;
@@ -45,7 +49,7 @@ class SickleaveStat extends \Model
                     . "FROM MonthlyIndividual "
                     . "WHERE username = :username AND `year` = year(localtime());");
 
-            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':username', $username_or_id);
             $stmt->execute();
             $rows = $stmt->fetchAll();
 

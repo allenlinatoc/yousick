@@ -20,22 +20,28 @@
  * [REST_META]
  *
  * username (string)
+ * id (int)
  *
  */
 
 header('Content-type: application/json');
 
-$expectations = [ 'username' ];
-
-if (!\Utilities\Requests::HasRequest($expectations))
+if (!isset($_REQUEST['username']) && !isset($_REQUEST['id']))
 {
     die(ModelResponse::InvalidRequest());
 }
 
-$username = trim(strtolower($_REQUEST['username']));
+if (isset($_REQUEST['username']))
+{
+    $username = trim(strtolower($_REQUEST['username']));
+    $sickleaveStat = new \Models\Counters\SickleaveStat($username);
+}
+else
+{
+    $id = intval($_REQUEST['id']);
+    $sickleaveStat = new \Models\Counters\SickleaveStat($id);
+}
 
-
-$sickleaveStat = new \Models\Counters\SickleaveStat($username);
 
 $response = new ModelResponse(true, 'Success', $sickleaveStat);
 die($response);
