@@ -89,7 +89,7 @@ class Email
                             . '<h2>Reason</h2>'
                             . '<h3><i>"{{reason}}"</i></h3><br>'
                             . 'To view this sick-leave, click the URL below: <br>'
-                            . '<a href="">{{url}}</a><br>'
+                            . '<a href="{{url}}">{{url}}</a><br>'
                             . '<br>'
                             . 'Thank you!<br>'
                             . '<i>OpeniT YouSick system</i>'
