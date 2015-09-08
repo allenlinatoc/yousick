@@ -88,7 +88,7 @@ class Email
                             . '<br>'
                             . '<h2>Reason</h2>'
                             . '<h3><i>"{{reason}}"</i></h3><br>'
-                            . 'To read this sick-leave, click the URL below: <br>'
+                            . 'To view this sick-leave, click the URL below: <br>'
                             . '<a href="">{{url}}</a><br>'
                             . '<br>'
                             . 'Thank you!<br>'
@@ -108,6 +108,64 @@ class Email
 
                 $mail->send();
             }
+        }
+    }
+
+
+    static public function NotifyPeopleFromSickleave(\Models\Sickleave $sickleave)
+    {
+        $mail = self::Instance();
+
+        $userAuthor = $sickleave->getAuthor();
+        $userFor = $sickleave->getFor();
+
+        $recipients = [ $userAuthor->getEmail() ];
+
+        if ($userAuthor->id != $userFor->id )
+            array_push($recipients, $userFor->getEmail());
+
+        foreach ($recipients as $recipient)
+        {
+            $mail->clearAllRecipients();
+
+            $user = $recipient == $userAuthor->getEmail() ? $userAuthor : $userFor;
+
+            if ($user instanceof \Models\User); // intellisense
+
+            $mail->addAddress($recipient, $user->getName());
+            $mail->Subject = sprintf('[READ] Sick-leave for %s has been read', $sickleave->getFor()->getName());
+            $mail->Body =
+                    String::Format(
+                            '<font face="arial" size="8px">'
+                            . 'Hello {{name}},<br>'
+                            . '<br>'
+                            . '<br>'
+                            . '<h2>Sick-leave for {{for_name}} has been read!</h2>'
+                            . '<br>'
+                            . '<b>For: </b>{{for_name}}<br>'
+                            . '<b>Author: </b>{{author_name}}<br>'
+                            . '<b>Target date: </b>{{date}}<br>'
+                            . '<b>Span: </b>{{span}} day/s<br>'
+                            . '<br>'
+                            . '<h2>Reason</h2>'
+                            . '<h3><i>"{{reason}}"</i></h3><br>'
+                            . 'To view this sick-leave, click the URL below: <br>'
+                            . '<a href="{{url}}">{{url}}</a><br>'
+                            . '<br>'
+                            . 'Thank you!<br>'
+                            . '<i>OpeniT YouSick system</i>'
+                            . '</font>',
+                            [
+                                'name' => $user->getName(),
+                                'for_name' => $sickleave->getFor()->getName(),
+                                'author_name' => $sickleave->getAuthor()->getName(),
+                                'date' => $sickleave->getDate(),
+                                'span' => $sickleave->getSpan(),
+                                'reason' => $sickleave->getReason(),
+                                'url' => BASE_URL . 'sickleave?id=' . $sickleave->GetRecordID()
+                            ]);
+
+            $mail->send();
         }
     }
 

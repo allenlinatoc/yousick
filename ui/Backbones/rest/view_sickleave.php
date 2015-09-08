@@ -22,8 +22,15 @@
  *
  */
 
+header('Content-type: application/json');
+
 $expectations = [ 'id' ];
 
 if (!\Utilities\Requests::HasRequest($expectations))
     die(ModelResponse::InvalidRequest());
 
+$id = $_REQUEST['id'];
+
+$sickLeave = Models\Sickleave::Find($id, 'sickleave');
+
+die(new ModelResponse(true, 'Success', $sickLeave));

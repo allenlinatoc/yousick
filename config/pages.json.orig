@@ -23,11 +23,6 @@
         "file" : "rest/logout_session",
         "template" : "blank"
     },
-    
-    "rest/mark_sickleave_as_read": {
-        "file" : "rest/mark_sickleave_as_read",
-        "template" : "blank"
-    },
 
     "rest/is_admin": {
         "file" : "rest/is_admin",
@@ -39,21 +34,20 @@
         "template" : "blank"
     },
 
-    "rest/view_sickleave": {
-        "file" : "rest/view_sickleave",
-        "template" : "blank"
-    },
-
     "rest/view_sickleaves": {
         "file" : "rest/view_sickleaves",
         "template" : "blank"
     },
-
+<<<<<<< HEAD
+    
     "rest/counters/sickleave_stats": {
         "file" : "rest/counters/sickleave_stats",
         "template" : "blank"
     },
     
+=======
+
+>>>>>>> 718341f9bc399c07a24b2ca8275a4dda2319e4d3
     "rest/reports/monthly": {
         "file" : "rest/reports/monthly",
         "template" : "blank"
@@ -64,26 +58,15 @@
     },
 
 
-
+    
     "home": {
-        "file" : "home",
-        "template" : "login"
+        "file" : "home"
     },
 
     "user": {
         "file" : "user",
         "template" : "user_form"
     },
-	
-	"see-history": {
-		"file" : "see-history",
-		"template" : "user_form"
-	},
-	
-	"view-sickleave" : {
-		"file" : "view-sickleave",
-		"template" : "user_form"
-	},
 
     "admin": {
         "file" : "admin",
@@ -105,15 +88,27 @@
         "template" : "admin_form"
     },
 
+<<<<<<< HEAD
     "admin/view-sickleave": {
         "file" : "admin/view-sickleave",
         "template" : "admin"
-
     },
+=======
+	"view-sickleave": {
+		"file" : "view-sickleave"
+	},
+>>>>>>> 718341f9bc399c07a24b2ca8275a4dda2319e4d3
 
     "aboutus": {
         "file" : "about-us"
     },
+<<<<<<< HEAD
+=======
+
+	"upload": {
+		"file" : "upload"
+	},
+>>>>>>> 718341f9bc399c07a24b2ca8275a4dda2319e4d3
 
     "404": {
         "template" : "404"
