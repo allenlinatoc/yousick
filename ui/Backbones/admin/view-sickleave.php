@@ -17,4 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-header('location: ' . BASE_URL . 'admin/home');
+if (!\Utilities\Requests::HasRequest([ 'id' ]))
+{
+    header('location: ' . BASE_URL);
+    exit();
+}
+

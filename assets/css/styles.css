@@ -3,9 +3,14 @@ body
 
 }
 
+a:hover
+{
+    text-decoration: none;
+}
+
 div.col-lg-4 span.input-group span.input-group-btn div
 {
-	display:none;
+    display:none;
 
 }
 
@@ -21,26 +26,26 @@ input[type="submit"].large
 {
     font-size: 30px;
     height: 50px;
-	background-attachment:#fff;
+    background-attachment:#fff;
 }
 
 div.col-lg-4 span.input-group div
 {
-	display:none;
+    display:none;
     position: absolute;
     right: -50px;
     top: 20px;
 }
 div.col-lg-4 div#spinnerUpload
 {
-	display:none;
+    display:none;
     position: absolute;
     right: -50px;
     top: 20px;
 }
 div.remodal span.input-group div
 {
-	display:none;
+    display:none;
     position: absolute;
     right: -50px;
     top: 20px;
@@ -67,22 +72,22 @@ input[type="submit"].large
 
 .col-with-right-separator
 {
-	padding-right: 20px;
-	border-right: 1px solid #cccccc;
+    padding-right: 20px;
+    border-right: 1px solid #cccccc;
 }
 
 .list-group-item.reports-nav-items.active
 {
-	background-color: #cd172d;
-	color: #ffffff;
+    background-color: #cd172d;
+    color: #ffffff;
 }
 
 .logo
 {
-	color: #ffffff;
-	font-size: 1.8em;
-	margin: 10px 0 10px -15px;
-	font-weight: bold;
+    color: #ffffff;
+    font-size: 1.8em;
+    margin: 10px 0 10px -15px;
+    font-weight: bold;
 }
 
 .no-gutter
@@ -98,19 +103,19 @@ input[type="submit"].large
 
 .reports-nav-items
 {
-	border: 0;
+    border: 0;
 }
 
 .reports-nav-items:hover
 {
-	background-color: #cd172d;
-	color: #ffffff;
+    background-color: #cd172d;
+    color: #ffffff;
 }
 
 .row-bottom-align
 {
-	display: table-cell;
-	vertical-align: bottom;
+    display: table-cell;
+    vertical-align: bottom;
 }
 
 .vertical-space
@@ -120,26 +125,26 @@ input[type="submit"].large
 
 #chart-container
 {
-	width: 100%;
+    width: 100%;
 }
 
 #reports-header
 {
-	font-weight: bold;
-	color: #383838;
-	margin-top: 25px;
+    font-weight: bold;
+    color: #383838;
+    margin-top: 25px;
 }
 
 #reports-nav
 {
-	background-color: transparent;
+    background-color: transparent;
 }
 
 #reports-nav > .list-group-item
 {
     border-radius: 0 !important;
-	text-align: left;
-	width: 100%;
+    text-align: left;
+    width: 100%;
 }
 
 #sl-count-wrapper
@@ -149,7 +154,7 @@ input[type="submit"].large
 
 #user-btn
 {
-	margin-top: 9px;
+    margin-top: 9px;
 }
 
 #user-header

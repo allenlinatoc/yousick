@@ -96,6 +96,11 @@ class User extends \Model
     }
 
 
+    /**
+     *
+     * @param string $username
+     * @return User
+     */
     static public function FindUsername($username)
     {
         $db = \DB::Instance();

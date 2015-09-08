@@ -21,6 +21,7 @@ if (isset($_FILES["myfile"]))
     }
 
     $destPath = "$uploadPath/$fileName";
+    
     if (move_uploaded_file($fileTmpLoc, $destPath))
     {
         $raw_data = CSV::Parse($destPath);
