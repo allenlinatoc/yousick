@@ -1,0 +1,93 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <h2>Sick-leave filed for <span id="for_name"></span></h2>
+            Created by <span id="author_name"></span>
+        </div>
+        <div class="col-sm-6 section-read" style="display: none">
+            <h3>Read by <span id="read_by"></span></h3>
+            <span id="read_on"></span>
+        </div>
+    </div>
+    <br>
+    <br>
+    <hr>
+    <h4>More details</h4>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-sm-6">
+            <b>Reason: </b>
+            <br>
+            <br><p id="reason">Loading...</p>
+        </div>
+        <div class="col-sm-6">
+            <b>Date: </b><span id="date"></span><br>
+            <b>Span: </b><span id="span"></span><br>
+            <b>Date filed: </b><span id="created_on"></span><br>
+        </div>
+    </div>
+</div>
+
+<!--
+    Import jQuery.timeago.js
+-->
+<script src="<?= BASE_URL ?>assets/3rd/js/jquery.timeago.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+    $.ajax({
+        url: '<?= BASE_URL ?>rest/view_sickleave',
+        data: {
+            'id': <?= $_GET['id'] ?>
+        },
+        method: 'post',
+        success: function (response) {
+            if (response.success)
+            {
+                var sickleave = response.data;
+                $('#for_name').text(sickleave.for_id.name);
+                $('#author_name').text(sickleave.author_id.name);
+
+                $('#reason').text(sickleave.reason);
+                $('#date').text(sickleave.date);
+                $('#span').text(sickleave.span + " day(s)");
+                $('#created_on').text(sickleave.created_on);
+
+                // Check if this sickleave is not yet read
+                if (sickleave.notifstatus == 'UNREAD')
+                {
+                    // Mark it as read
+                    $.ajax({
+                        url: '<?= BASE_URL ?>rest/mark_sickleave_as_read',
+                        data: {
+                            'id' : sickleave.ID
+                        },
+                        method: 'post',
+                        success: function (response) {
+                            if (response.success)
+                            {
+                                // Make section-read visible
+                                $('#read_by').text(response.data.read_by.name);
+                                $('#read_on').text(jQuery.timeago(response.data.read_on));
+                                $('.section-read').show();
+                            }
+                        }
+                    });
+                }
+                else
+                {
+                    // Make section-read visible
+                    $('#read_by').text(sickleave.read_by.name);
+                    $('#read_on').text(jQuery.timeago(sickleave.read_on));
+                    $('.section-read').show();
+                }
+
+            } else
+            {
+                alert("Something went wrong. Please reload the page and try again");
+            }
+        }
+    });
+
+</script>
