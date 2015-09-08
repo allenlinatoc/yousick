@@ -21,6 +21,8 @@
         <script src="<?= BASE_URL ?>bower_components/highcharts/highcharts.js" type="text/javascript" ></script>
 
         <script type="text/javascript">
+            window.BASE_URL = "<?= BASE_URL ?>";
+
             $.ajax({
                 dataType: 'json',
                 url: '<?= BASE_URL ?>/rest/get_session',
@@ -53,7 +55,7 @@
                             <li role="separator" class="divider"></li>
                             <li><a href="<?= BASE_URL ?>admin/import-csv">Import Employee Details (CSV)</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#" id="logout">Logout</a></li>
+                            <li><a href="" id="logout">Logout</a></li>
                         </ul>
                     </div>
                 </span>
@@ -68,8 +70,6 @@
         <script type="text/javascript">
             // Bind Logout
             $('#logout').click(function(e) {
-                e.preventDefault();
-
                 $.ajax({
                     url: '<?= BASE_URL ?>rest/logout_session',
                     contentType: 'json',
