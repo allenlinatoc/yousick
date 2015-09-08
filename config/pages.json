@@ -80,8 +80,8 @@
 		"template" : "user_form"
 	},
 	
-	"view-sickleave" : {
-		"file" : "view-sickleave",
+	"user/view-sickleave" : {
+		"file" : "user/view-sickleave",
 		"template" : "user_form"
 	},
 
@@ -108,7 +108,6 @@
     "admin/view-sickleave": {
         "file" : "admin/view-sickleave",
         "template" : "admin"
-
     },
 
     "aboutus": {

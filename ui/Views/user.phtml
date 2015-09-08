@@ -18,7 +18,7 @@
     <div id="user-header" class="row">
         <div id="name-wrapper">
             <h2 id="name">Loading...</h2>
-            <label><strong>0/15</strong> Sick Leave Filed</label>
+            <label><strong id="sickleave-stat">0/15</strong> Sick Leave Filed</label>
             <span class="pull-right">
                 <a href="<?= BASE_URL ?>user/history">See history</a>
             </span>
@@ -135,6 +135,25 @@
                 }
             }
         });
+    });
+
+    // Load stats counter
+    $('#sickleave-stat').text('[ loading ]');
+    $.ajax({
+        url: '<?= BASE_URL ?>rest/counters/sickleave_stats',
+        data: {
+            'username': '<?= \Utilities\Session::Initialize()->getUser()->getUsername() ?>'
+        },
+        method: 'post',
+        success: function (response) {
+            if (response.success)
+            {
+                $('#sickleave-stat').text(response.data.used + '/' + response.data.remaining);
+            } else
+            {
+                $('#sickleave-stat').text('[ network error ]');
+            }
+        }
     });
 </script>
 

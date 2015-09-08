@@ -1,6 +1,10 @@
 <div class="container">
+    <br>
     <div class="row">
         <div class="col-sm-6">
+            <btn data-btn="Navigate.Back" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Go back</btn>
+            <btn data-btn="Navigate.BackToList" class="btn btn-primary"><span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;Back to list</btn>
+
             <h2>Sick-leave filed for <span id="for_name"></span></h2>
             Created by <span id="author_name"></span>
         </div>
@@ -36,6 +40,15 @@
 
 <script type="text/javascript">
 
+    $('btn[data-btn="Navigate.Back"]').click(function(e) {
+        e.preventDefault();
+        window.history.back();
+    });
+    $('btn[data-btn="Navigate.BackToList"]').click(function(e) {
+        e.preventDefault();
+        window.location.replace('<?= BASE_URL ?>user/history');
+    });
+
     $.ajax({
         url: '<?= BASE_URL ?>rest/view_sickleave',
         data: {
@@ -57,23 +70,23 @@
                 // Check if this sickleave is not yet read
                 if (sickleave.notifstatus == 'UNREAD')
                 {
-                    // Mark it as read
-                    $.ajax({
-                        url: '<?= BASE_URL ?>rest/mark_sickleave_as_read',
-                        data: {
-                            'id' : sickleave.ID
-                        },
-                        method: 'post',
-                        success: function (response) {
-                            if (response.success)
-                            {
-                                // Make section-read visible
-                                $('#read_by').text(response.data.read_by.name);
-                                $('#read_on').text(jQuery.timeago(response.data.read_on));
-                                $('.section-read').show();
-                            }
-                        }
-                    });
+//                    // Mark it as read
+//                    $.ajax({
+//                        url: '<?= BASE_URL ?>rest/mark_sickleave_as_read',
+//                        data: {
+//                            'id' : sickleave.ID
+//                        },
+//                        method: 'post',
+//                        success: function (response) {
+//                            if (response.success)
+//                            {
+//                                // Make section-read visible
+//                                $('#read_by').text(response.data.read_by.name);
+//                                $('#read_on').text(jQuery.timeago(response.data.read_on));
+//                                $('.section-read').show();
+//                            }
+//                        }
+//                    });
                 }
                 else
                 {

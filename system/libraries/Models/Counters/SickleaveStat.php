@@ -43,7 +43,7 @@ class SickleaveStat extends \Model
         {
             $stmt = $pdo->prepare("SELECT count "
                     . "FROM MonthlyIndividual "
-                    . "WHERE username = :username AND `year` = year(localtime()) AND `month` = month(localtime());");
+                    . "WHERE username = :username AND `year` = year(localtime());");
 
             $stmt->bindParam(':username', $username);
             $stmt->execute();
