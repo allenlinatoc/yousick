@@ -73,12 +73,12 @@
     $.ajax({
         dataType: 'json',
         url: '<?= BASE_URL ?>/rest/get_session',
-        success: function(session) {
+        success: function (session) {
             if (session.success)
-			{
+            {
                 $('#name').html(session.data.user.name + "  <span class='caret'></span>");
                 $('#user-btn').html(session.data.user.username + "  <span class='caret'></span>")
-			}
+            }
         }
     });
 
@@ -95,20 +95,23 @@
         var date = moment(jsDate).format('YYYY-MM-DD');
         $('#date').val(date);
 
-        var data = $('#fileSickLeave').serialize()+"&author_id="+user_id+"&for_id="+user_id;
+        var data = $('#fileSickLeave').serialize() + "&author_id=" + user_id + "&for_id=" + user_id;
         console.log(data);
 
         $.ajax({
             method: 'POST',
             url: '/rest/create_sickleave',
             data: data,
-            success: function(retData) {
-                if(retData.success)
+            success: function (retData) {
+                if (retData.success)
                 {
                     alert("Success: " + retData.message);
+
+                    if (retData.data.has_state && !retData.data.state.success)
+                        alert(retData.data.state.message);
+
                     window.location.replace('<?= BASE_URL ?>user/history')
-                }
-                else {
+                } else {
                     if (retData.has_state && !retData.data.state.success)
                         alert("Failed: " + retData.data.state.message);
                     else
@@ -117,21 +120,21 @@
             }
         });
     });
-	// Bind Logout
-		$('#logout').click(function(e) {
-			e.preventDefault();
+    // Bind Logout
+    $('#logout').click(function (e) {
+        e.preventDefault();
 
-			$.ajax({
-				url: '<?= BASE_URL ?>rest/logout_session',
-				contentType: 'json',
-				method: 'POST',
-				success: function(response) {
-					if (response.success)
-					{
-						window.location = '<?= BASE_URL ?>';
-					}
-				}
-			});
-		});
+        $.ajax({
+            url: '<?= BASE_URL ?>rest/logout_session',
+            contentType: 'json',
+            method: 'POST',
+            success: function (response) {
+                if (response.success)
+                {
+                    window.location = '<?= BASE_URL ?>';
+                }
+            }
+        });
+    });
 </script>
 
