@@ -119,7 +119,6 @@
     });
 
     $('#file-sl-btn').click(function(e) {
-        e.preventDefault();
         var jsDate = new Date($('#date').val());
         var date = moment(jsDate).format('YYYY-MM-DD');
         $('#date').val(date);
