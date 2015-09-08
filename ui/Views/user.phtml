@@ -72,7 +72,7 @@
 <script type="text/javascript">
     $.ajax({
         dataType: 'json',
-        url: '/rest/get_session',
+        url: '<?= BASE_URL ?>/rest/get_session',
         success: function(session) {
             if (session.success)
 			{

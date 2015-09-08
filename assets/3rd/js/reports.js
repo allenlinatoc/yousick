@@ -1,173 +1,245 @@
+function getData($url) {
+    return $.ajax({
+        dataType: 'json',
+        url: $url
+    });
+}
+
+function getIndex(array, name)
+{
+    var length = array.length;
+    for(var i = 0; i < length; i++)
+    {
+        if (array[i].name == name)
+            return i;
+    }
+    return -1;
+}
+
 $('#report1-nav-item').click(function() {
-    $('#chart-container').highcharts({
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'Monthly Average Temperature'
-        },
-        subtitle: {
-            text: 'Source: WorldClimate.com'
-        },
-        xAxis: {
-            categories: ['2013', '2014', '2015']
-        },
-        yAxis: {
-            title: {
-                text: 'Total Sick Leaves Filed'
-            }
-        },
-        plotOptions: {
-            line: {
-                dataLabels: {
-                    enabled: true
+    var $data = getData(window.BASE_URL + '/rest/reports/monthly');
+
+    $data.success(function (data) {
+        if (data.success)
+        {
+            var options = {
+                chart: {
+                    type: 'line'
                 },
-                enableMouseTracking: false
-            }
-        },
-        series: [{
-            name: 'All',
-            data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-        }]
+                title: {
+                    text: $('#report1-nav-item').text()
+                },
+                xAxis: {
+                    categories: []
+                },
+                yAxis: {
+                    title: {
+                        text: 'Total Sick Leaves Filed'
+                    }
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: false
+                    }
+                },
+                series: []
+            };
+
+            var length = data.data.collection.length;
+            var sl_count = [];
+
+            $.each(data.data.collection, function (index, monthly_data) {
+                options.xAxis.categories.push(monthly_data.year+"-"+monthly_data.month);
+                sl_count.push(parseInt(monthly_data.count));
+
+                if (length == index+1)
+                {
+                    options.series.push({
+                        name: 'All',
+                        data: sl_count
+                    })
+                    $('#chart-container').highcharts(options);
+                }
+            });
+        }
     });
 });
 
 $('#report2-nav-item').click(function() {
-    $('#chart-container').highcharts({
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'Monthly Average Temperature'
-        },
-        subtitle: {
-            text: 'Source: WorldClimate.com'
-        },
-        xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        },
-        yAxis: {
-            title: {
-                text: 'Total Sick Leaves Filed'
-            }
-        },
-        plotOptions: {
-            line: {
-                dataLabels: {
-                    enabled: true
+    var $data = getData(window.BASE_URL + '/rest/reports/monthly?category=department');
+
+    $data.success(function (data) {
+        if (data.success)
+        {
+            var options = {
+                chart: {
+                    type: 'column'
                 },
-                enableMouseTracking: false
-            }
-        },
-        series: [{
-            name: 'All',
-            data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-        }]
+                title: {
+                    text: $('#report2-nav-item').text()
+                },
+                xAxis: {
+                    categories: []
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Total Sick Leaves Filed'
+                    },
+                    stackLabels: {
+                        enabled: true,
+                        style: {
+                            fontWeight: 'bold',
+                            color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                        }
+                    }
+                },
+                legend: {
+                    align: 'right',
+                    x: -30,
+                    verticalAlign: 'top',
+                    y: 25,
+                    floating: true,
+                    backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+                    borderColor: '#CCC',
+                    borderWidth: 1,
+                    shadow: false
+                },
+                tooltip: {
+                    formatter: function () {
+                        return '<b>' + this.x + '</b><br/>' +
+                            this.series.name + ': ' + this.y + '<br/>' +
+                            'Total: ' + this.point.stackTotal;
+                    }
+                },
+                plotOptions: {
+                    column: {
+                        stacking: 'normal',
+                        dataLabels: {
+                            enabled: true,
+                            color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                            style: {
+                                textShadow: '0 0 3px black'
+                            }
+                        }
+                    }
+                },
+                series: []
+            };
+
+            var length = data.data.collection.length;
+            var sl_count = [];
+
+            $.each(data.data.collection, function (index, dept_data) {
+                var xIndex = $.inArray(dept_data.yearmonth, options.xAxis.categories);
+                if (xIndex == -1)
+                {
+                    options.xAxis.categories.push(dept_data.yearmonth);
+                    xIndex = options.xAxis.categories.length-1;
+                }
+
+                var dept = dept_data.department;
+                var seriesIndex = getIndex(options.series, dept);
+                if (seriesIndex == -1)
+                {
+                    var seriesData = [];
+                    for(var i = 0; i < xIndex; i++)
+                    {
+                        seriesData.push(0);
+                    }
+                    options.series.push({ name: dept, data: seriesData});
+
+                    seriesIndex = options.series.length-1;
+                }
+                else {
+                    if (options.series[seriesIndex].data.length < xIndex)
+                    for (var i = 0; i < xIndex; i++)
+                    {
+                        if (options.series[seriesIndex].data[i] == null)
+                            options.series[seriesIndex].data.push(0);
+                    }
+                }
+                options.series[seriesIndex].data.push(parseInt(dept_data.count));
+
+                if (length == index+1)
+                    $('#chart-container').highcharts(options);
+            });
+        }
     });
 });
 
 $('#report3-nav-item').click(function() {
-    $('#chart-container').highcharts({
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'Stacked column chart'
-        },
-        xAxis: {
-            // months
-            categories: ['Jan', 'Feb', 'March', 'April', 'May', 'June']
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: 'Total Sick Leaves Filed'
-            },
-            stackLabels: {
-                enabled: true,
-                style: {
-                    fontWeight: 'bold',
-                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+    var $data = getData(window.BASE_URL + '/rest/reports/monthly?category=individual');
+
+    $data.success(function (data) {
+        if (data.success)
+        {
+            var options = {
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: $('#report3-nav-item').text()
+                },
+                xAxis: {
+                    categories: []
+                },
+                yAxis: {
+                    title: {
+                        text: 'Total Filed Sick Leave'
+                    }
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: false
+                    }
+                },
+                series: []
+            };
+
+            var length = data.data.collection.length;
+            var sl_count = [];
+
+            $.each(data.data.collection, function (index, ind_data) {
+                var xIndex = $.inArray(ind_data.yearmonth, options.xAxis.categories);
+                if (xIndex == -1)
+                {
+                    options.xAxis.categories.push(ind_data.yearmonth);
+                    xIndex = options.xAxis.categories.length-1;
                 }
-            }
-        },
-        legend: {
-            align: 'right',
-            x: -30,
-            verticalAlign: 'top',
-            y: 25,
-            floating: true,
-            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
-            borderColor: '#CCC',
-            borderWidth: 1,
-            shadow: false
-        },
-        tooltip: {
-            formatter: function () {
-                return '<b>' + this.x + '</b><br/>' +
-                    this.series.name + ': ' + this.y + '<br/>' +
-                    'Total: ' + this.point.stackTotal;
-            }
-        },
-        plotOptions: {
-            column: {
-                stacking: 'normal',
-                dataLabels: {
-                    enabled: true,
-                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
-                    style: {
-                        textShadow: '0 0 3px black'
+
+                var username = ind_data.username;
+                var seriesIndex = getIndex(options.series, username);
+                if (seriesIndex == -1)
+                {
+                    var seriesData = [];
+                    for(var i = 0; i < xIndex; i++)
+                    {
+                        seriesData.push(0);
+                    }
+                    options.series.push({ name: username, data: seriesData});
+
+                    seriesIndex = options.series.length-1;
+                }
+                else {
+                    if (options.series[seriesIndex].data.length < xIndex)
+                    for (var i = 0; i < xIndex; i++)
+                    {
+                        if (options.series[seriesIndex].data[i] == null)
+                            options.series[seriesIndex].data.push(0);
                     }
                 }
-            }
-        },
-        // departments
-        series: [{
-            name: 'DEV',
-            data: [5, 3, 4, 7, 2]
-        }, {
-            name: 'Support',
-            data: [2, 2, 3, 2, 1]
-        }, {
-            name: 'ITS',
-            data: [3, 4, 4, 2, 5]
-        }]
-    });
-});
+                options.series[seriesIndex].data.push(parseInt(ind_data.count));
 
-$('#report4-nav-item').click(function() {
-    $('#chart-container').highcharts({
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'Monthly Average Temperature'
-        },
-        subtitle: {
-            text: 'Source: WorldClimate.com'
-        },
-        xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        },
-        yAxis: {
-            title: {
-                text: 'Total Sick Leaves Filed'
-            }
-        },
-        plotOptions: {
-            line: {
-                dataLabels: {
-                    enabled: true
-                },
-                enableMouseTracking: false
-            }
-        },
-        series: [{
-            name: 'Tokyo',
-            data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-        }, {
-            name: 'London',
-            data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-        }]
+                if (length == index+1)
+                    $('#chart-container').highcharts(options);
+            });
+        }
     });
 });

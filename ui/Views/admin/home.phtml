@@ -3,12 +3,12 @@
     <div class="col-sm-3">
         <h4 id="reports-header">REPORTS</h4>
         <div id="reports-nav" class="list-group">
-            <button type="button" data-report="report1" class="active list-group-item reports-nav-items">Monthly sick-leave (overall)</button>
-            <button type="button" data-report="report2" class="list-group-item reports-nav-items">Monthly sick-leave by Department</button>
-            <button type="button" data-report="report3" class="list-group-item reports-nav-items">Monthly sick-leave by Individual</button>
-            <button type="button" data-report="report4" class="list-group-item reports-nav-items">Yearly sick-leave (overall)</button>
-            <button type="button" data-report="report5" class="list-group-item reports-nav-items">Yearly sick-leave by Department</button>
-            <button type="button" data-report="report5" class="list-group-item reports-nav-items">Yearly sick-leave by Individual</button>
+            <button type="button" id="report1-nav-item" class="active list-group-item reports-nav-items">Monthly sick-leave (overall)</button>
+            <button type="button" id="report2-nav-item" class="list-group-item reports-nav-items">Monthly sick-leave by Department</button>
+            <button type="button" id="report3-nav-item" class="list-group-item reports-nav-items">Monthly sick-leave by Individual</button>
+            <button type="button" id="report4-nav-item" class="list-group-item reports-nav-items">Yearly sick-leave (overall)</button>
+            <button type="button" id="report5-nav-item" class="list-group-item reports-nav-items">Yearly sick-leave by Department</button>
+            <button type="button" id="report6-nav-item" class="list-group-item reports-nav-items">Yearly sick-leave by Individual</button>
         </div>
     </div>
     <div class="col-sm-9">
@@ -17,35 +17,11 @@
     </div>
 </div>
 
-
-
+<script src="<?= BASE_URL ?>/assets/3rd/js/reports.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-
-
-        $('#chart-container').highcharts({
-            chart: {
-                type: 'bar'
-            },
-            title: {
-                text: 'Monthly sick-leave overall'
-            },
-            xAxis: {
-                categories: [ 'alinatoc', 'rdognidon', 'lromero' ]
-            },
-            yAxis: {
-                title: {
-                    text: 'Fruit eaten'
-                }
-            },
-            series: [{
-                    name: 'Jane',
-                    data: [1, 0, 4]
-                }, {
-                    name: 'John',
-                    data: [5, 7, 3]
-                }]
-        });
+    $('#report1-nav-item').click();
+    $(".reports-nav-items").click(function(){
+        $(this).addClass("active").siblings().removeClass("active");
     });
 </script>
