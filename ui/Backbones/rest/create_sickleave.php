@@ -61,7 +61,14 @@ if (!$newSickleave->SaveAll())
 $isNotificationEnabled = Utilities\Config::get('email_notification', CONFIG_PATH . 'application.ini');
 if ($isNotificationEnabled == 1)
 {
-    Utilities\Email::NotifyAdmins($newSickleave);
+    try
+    {
+        Utilities\Email::NotifyAdmins($newSickleave);
+    }
+    catch (phpmailerException $ex)
+    {
+        $newSickleave->SetState(new ModelResponse(false, 'Failure on notifying admins: ' . $ex->getMessage()));
+    }
 }
 
 die(new ModelResponse(true, "Sick leave entry has been successfully added!", $newSickleave));

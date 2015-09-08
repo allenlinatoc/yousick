@@ -44,7 +44,7 @@ class SessionData extends \Model
     /**
      * @property user
      * @complex
-     * @return string
+     * @return User
      */
     public function getUser() { return $this->user; }
 
