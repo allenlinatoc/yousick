@@ -19,18 +19,21 @@
  * [REST_META]
  *
  * [optional] username (string)
+ * [optional] thisMonth (integer)
  *
  */
 
 header('Content-type: application/json');
 
+$thisMonth = isset($_REQUEST['thisMonth']) && intval($_REQUEST['thisMonth']) == 1;
+
 if (isset($_REQUEST['username']) && strlen($_REQUEST['username']) > 0)
 {
-    $sickleaveList = \Models\SickleaveList::CreateFromUsername($_REQUEST['username']);
+    $sickleaveList = \Models\SickleaveList::CreateFromUsername($_REQUEST['username'], $thisMonth);
 }
 else
 {
-    $sickleaveList = new \Models\SickleaveList();
+    $sickleaveList = new \Models\SickleaveList(true, $thisMonth);
 }
 
 die(new ModelResponse(true, null, $sickleaveList));

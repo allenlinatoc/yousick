@@ -1,6 +1,6 @@
 <div class="row header">
     <div class="col-xs-6">
-        <a href="<?= BASE_URL ?>/user"><h1 class="logo col-xs-6">YouSick</h1></a>
+        <a href="<?= BASE_URL ?>user"><h1 class="logo col-xs-6">YouSick</h1></a>
     </div>
     <span class="col-xs-6">
         <div class="btn-group pull-right">
@@ -68,7 +68,7 @@
                         var row = sickleaves.data.collection[i];
                         if (author_id == row.for_id.ID)
                         {
-                            $('#infos').append('<tr><td><a href="http://localhost:8888/user/view-sickleave?id=' + row.ID + '"><font size="4px">' + row.created_on + '</font></a></td>'
+                            $('#infos').append('<tr><td><a href="<?= BASE_URL ?>user/view-sickleave?id=' + row.ID + '"><font size="4px">' + row.created_on + '</font></a></td>'
                                     + '<td><font size="4px">' + row.date + '</font></td>'
                                     + '<td><font size="4px">' + row.reason + '</font></td></tr>');
                         }

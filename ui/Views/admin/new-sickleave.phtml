@@ -102,7 +102,7 @@
                 method: 'POST',
                 url: '<?= BASE_URL ?>/rest/counters/sickleave_stats',
                 data: {
-                    'username' : value
+                    'id' : value
                 },
                 dataType: 'json',
                 success: function(response) {
@@ -126,7 +126,7 @@
             {
                 $.each(employees.data.collection, function (index, employee) {
                     selectizeControl.addOption({
-                        value: employee.username,
+                        value: employee.ID,
                         text: employee.name
                     });
                 });
@@ -134,7 +134,7 @@
         }
     });
 
-    $('#file-sl-btn').click(function (e) {
+    $('#sl-form').submit(function (e) {
         e.preventDefault();
 
         var jsDate = new Date($('#date').val());

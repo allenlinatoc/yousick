@@ -89,7 +89,7 @@ class Email
                             . '<h2>Reason</h2>'
                             . '<h3><i>"{{reason}}"</i></h3><br>'
                             . 'To view this sick-leave, click the URL below: <br>'
-                            . '<a href="">{{url}}</a><br>'
+                            . '<a href="{{url}}">{{url}}</a><br>'
                             . '<br>'
                             . 'Thank you!<br>'
                             . '<i>OpeniT YouSick system</i>'
@@ -101,7 +101,7 @@ class Email
                                 'date' => $sickleave->getDate(),
                                 'span' => $sickleave->getSpan(),
                                 'reason' => $sickleave->getReason(),
-                                'url' => BASE_URL . 'sickleave?id=' . $sickleave->GetRecordID()
+                                'url' => BASE_URL . 'admin/view-sickleave?id=' . $sickleave->GetRecordID()
                             ]);
 
                 // Send mail
@@ -162,7 +162,7 @@ class Email
                                 'date' => $sickleave->getDate(),
                                 'span' => $sickleave->getSpan(),
                                 'reason' => $sickleave->getReason(),
-                                'url' => BASE_URL . 'sickleave?id=' . $sickleave->GetRecordID()
+                                'url' => BASE_URL . 'user/view-sickleave?id=' . $sickleave->GetRecordID()
                             ]);
 
             $mail->send();

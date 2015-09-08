@@ -24,20 +24,48 @@ namespace Models;
  *
  * @author alinatoc
  */
-class SickleaveList extends \ModelCollection
-{
+class SickleaveList extends \ModelCollection{
 
-    public function __construct($fetch = true)
+    public function __construct($fetch = true, $thisMonth = false)
     {
-        parent::__construct('sickleave', $fetch);
+        $will_really_fetch = $fetch;
+
+        parent::__construct('sickleave', $thisMonth ? false : $fetch);
+
+        if ($will_really_fetch && $thisMonth)
+        {
+            $pdo = \DB::Instance()->pdo;
+            if ($pdo instanceof \PDO)
+            {
+                if ($thisMonth)
+                    $stmt = $pdo->prepare("SELECT sickleave.* FROM sickleave JOIN user ON sickleave.for_id = user.id WHERE year(date) = year(localtime()) AND month(date) = month(localtime()) ORDER BY sickleave.date DESC");
+                else
+                    $stmt = $pdo->prepare("SELECT sickleave.* FROM sickleave JOIN user ON sickleave.for_id = user.id WHERE year(date) = year(localtime()) ORDER BY sickleave.date DESC");
+
+                $stmt->execute();
+
+                $rows = $stmt->fetchAll();
+
+                foreach ($rows as $row)
+                {
+                    $sickleave = new Sickleave();
+                    $sickleave->Absorb($row);
+
+                    $this->add($sickleave);
+                }
+            }
+        }
     }
 
-    static public function CreateFromUsername($username)
+    static public function CreateFromUsername($username, $thisMonth = false)
     {
         $pdo = \DB::Instance()->pdo;
         if ($pdo instanceof \PDO)
         {
-            $stmt = $pdo->prepare("SELECT sickleave.* FROM sickleave JOIN user ON sickleave.for_id = user.id AND user.username = :username ORDER BY sickleave.date DESC");
+            if ($thisMonth)
+                $stmt = $pdo->prepare("SELECT sickleave.* FROM sickleave JOIN user ON sickleave.for_id = user.id AND user.username = :username WHERE year(date) = year(localtime()) AND month(date) = month(localtime()) ORDER BY sickleave.date DESC");
+            else
+                $stmt = $pdo->prepare("SELECT sickleave.* FROM sickleave JOIN user ON sickleave.for_id = user.id AND user.username = :username WHERE year(date) = year(localtime()) ORDER BY sickleave.date DESC");
 
             $stmt->execute([
                 ':username' => $username
